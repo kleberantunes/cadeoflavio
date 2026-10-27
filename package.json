@@ -1,5 +1,5 @@
 {
-  "name": "onde-esta-o-flavio", "version": "0.1.0", "private": true,
+  "name": "onde-esta-o-flavio", "version": "0.2.0", "private": true,
   "type": "module", "author": "AK Labs", "description": "Onde Está o Flávio? — Developed by AK Labs",
   "scripts": { "dev": "node scripts/server.mjs", "test": "node --test tests/*.test.mjs", "build": "node scripts/build.mjs" }
 }

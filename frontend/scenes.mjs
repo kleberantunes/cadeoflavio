@@ -1,4 +1,5 @@
 // Original deterministic illustrated scenes. Developed by AK Labs.
+import { castForCrowd, spriteBox } from './cast.mjs';
 export const W = 2400, H = 1600;
 export const levels = [
   { name: 'Cadê no Rio?', place: 'Rio de Janeiro', country: 'BRASIL', slug: 'rio', color: '#e9ab64', count: 520, duration: 120, tag: 'Primeira parada', description: 'Entre lajes, música e muita gente, alguém resolveu se misturar.', stamp: 'RIO', seed: 23 },
@@ -90,12 +91,25 @@ function person(c,p) {
   if(p.seed<.15){rect(c,-7,-72,6,4,'#4f4d48');rect(c,2,-72,6,4,'#4f4d48');}
   c.restore();
 }
-export function renderWorld(level, people, target, sprite, resolution=1.71) {
+export function renderWorld(level, people, target, targetAsset, castAssets={}, resolution=1.71) {
   const canvas=document.createElement('canvas');canvas.width=Math.round(W*resolution);canvas.height=Math.round(H*resolution);
   const c=canvas.getContext('2d');c.scale(resolution,resolution);architecture(c,level);
   let box;
+  const castPlan=castForCrowd(people,target,levels.indexOf(level));
   for(const p of people){
-    if(p===target){const h=p.height*1.04,w=h*sprite.width/sprite.height;box={x:p.x-w/2,y:p.y-h,w,h};c.drawImage(sprite,box.x,box.y,w,h);} else person(c,p);
+    const asset=p===target?targetAsset:castAssets[castPlan.get(p.id)];
+    if(asset){
+      const b=spriteBox(p,asset);
+      if(p===target)box=b;
+      c.fillStyle='#625a4633';c.beginPath();c.ellipse(p.x,p.y,Math.min(b.w*.4,p.height*.6),p.height*.045,0,0,Math.PI*2);c.fill();
+      c.drawImage(asset.image,b.x,b.y,b.w,b.h);
+      // Waist-up supplied poses emerge behind a planter, concealing the cut edge.
+      if(asset.meta.lift>0&&asset.meta.id!=='flag'){
+        const y=b.y+b.h-6;
+        rect(c,b.x-5,y,b.w+10,18,'#b99c78');
+        for(let k=0;k<5;k++)circle(c,b.x+k*b.w/4,y,6,['#7d9568','#a1a574','#66876d'][k%3]);
+      }
+    } else person(c,p);
   }
-  return {canvas, box};
+  return {canvas, box, castPlan};
 }

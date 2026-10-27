@@ -1,11 +1,10 @@
 import { scoreLevel, starsFor, screenToWorld, clampCamera, chooseSpawn, penalize, safeProgress } from './core.mjs';
 import { levels, makeCrowd, spawnCandidates, renderWorld, W, H } from './scenes.mjs';
+import { poses, levelPoses, loadSprite, loadCast, hitSprite } from './cast.mjs';
 
 const $=s=>document.querySelector(s), app=$('#app'), dialog=$('#dialog');
 let progress={}, sound=false, untimed=false, audio, game=null, home=true, loadTicket=0;
 try { progress=safeProgress(JSON.parse(localStorage.getItem('ak-flavio-v1')||'{}')); } catch {}
-const sprite=new Image();sprite.src='./assets/flavio.png';
-const spriteReady=sprite.decode();spriteReady.catch(()=>{});
 const fmt=n=>new Intl.NumberFormat('pt-BR').format(n);
 const clock=n=>`${Math.floor(Math.max(0,n)/60)}`.padStart(2,'0')+':'+`${Math.floor(Math.max(0,n)%60)}`.padStart(2,'0');
 const stars=n=>'★'.repeat(n)+'☆'.repeat(3-n);
@@ -18,7 +17,7 @@ function save(){try{localStorage.setItem('ak-flavio-v1',JSON.stringify(progress)
 function renderHome(){
   ++loadTicket;home=true;if(game)game.active=false;game=null;document.body.classList.remove('playing');
   const complete=Object.keys(progress).length;
-  app.innerHTML=`<section class="hero"><div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> BUSCA VISUAL · SÁTIRA · UM POUCO DE CAOS</div><h1>Todo mundo por aí.<br><span>Cadê o <em>Flávio?</em></span></h1><p>Quatro destinos. Centenas de distrações.<br>Um sujeito listrado tentando passar despercebido.<br>Seu trabalho? Encontrar.</p><div class="hero-actions"><button class="primary" id="play">Bora procurar <span>↗</span></button><span class="no-account">Sem cadastro.<br>Só precisa de um bom olho.</span></div><div class="travel-line"><span>RIO</span><i>········</i><span>BSB</span><i>········</i><span>BUE</span><i>········</i><span>MCO</span><b>✈</b></div></div><div class="hero-art"><div class="postcard"><img src="./assets/rio.webp" alt="Referência ilustrada de uma comunidade carioca em festa"><span class="postcard-label">PRÓXIMA PARADA: RIO DE JANEIRO</span><span class="postcard-note">Tem alguém<br>fora do lugar…</span></div><div class="wanted"><span>PROCURA-SE</span><img src="./assets/flavio.png" alt="Flávio de camiseta e gorro listrados"><b>Achou esse aqui?</b><small>Então você entendeu o jogo.</small></div><div class="stamp">BUSCA<br><b>EM ABERTO</b><br>AK LABS · 2026</div></div></section>
+  app.innerHTML=`<section class="hero"><div class="hero-copy"><div class="eyebrow"><span class="live-dot"></span> BUSCA VISUAL · SÁTIRA · UM POUCO DE CAOS</div><h1>Todo mundo por aí.<br><span>Cadê o <em>Flávio?</em></span></h1><p>Quatro destinos. Centenas de distrações.<br>Um sujeito listrado tentando passar despercebido.<br>Seu trabalho? Encontrar.</p><div class="hero-actions"><button class="primary" id="play">Bora procurar <span>↗</span></button><span class="no-account">Sem cadastro.<br>Só precisa de um bom olho.</span></div><div class="travel-line"><span>RIO</span><i>········</i><span>BSB</span><i>········</i><span>BUE</span><i>········</i><span>MCO</span><b>✈</b></div></div><div class="hero-art"><div class="postcard"><img src="./assets/rio.webp" alt="Referência ilustrada de uma comunidade carioca em festa"><span class="postcard-label">PRÓXIMA PARADA: RIO DE JANEIRO</span><span class="postcard-note">Tem alguém<br>fora do lugar…</span></div><div class="wanted"><span>PROCURA-SE</span><img src="./assets/cast/standing.png" alt="Flávio de camiseta e gorro listrados"><b>Achou esse aqui?</b><small>Então você entendeu o jogo.</small></div><div class="stamp">BUSCA<br><b>EM ABERTO</b><br>AK LABS · 2026</div></div></section>
   <section class="destinations" aria-labelledby="destinations-title"><div class="section-top"><div><div class="eyebrow">ESCOLHA SUA PRÓXIMA PARADA</div><h2 id="destinations-title">Um roteiro nada discreto<span class="red">.</span></h2></div><div class="progress-summary"><strong>${complete}<span>/4</span></strong><span>destinos encontrados<br><b>${fmt(total())} pontos no passaporte</b></span></div></div><div class="level-grid">${levels.map((l,i)=>`<button class="level-card" data-level="${i}" aria-label="Jogar fase ${i+1}: ${l.name}"><div class="card-art"><img src="./assets/${l.slug}.webp" alt="Referência visual de ${l.place}"><span class="card-number">0${i+1}</span>${progress[i]?`<span class="card-done">${stars(progress[i].stars)}</span>`:''}<span class="card-arrow">↗</span></div><div class="card-content"><div class="card-country">${l.country}<span>${i<2?'●●○':'●●●'}</span></div><h3>${l.name}</h3><p>${l.description}</p><div class="card-meta"><span>⌖ ${l.place}</span><span>${l.tag}</span></div></div></button>`).join('')}</div></section>
   <section class="bottom-strip"><span class="strip-icon">◎</span><div><b>A pressa é inimiga da observação.</b><p>Amplie, arraste e desconfie de toda camiseta listrada.</p></div><label class="switch-label"><input type="checkbox" id="untimed" ${untimed?'checked':''}><span class="switch"></span>Jogar sem cronômetro</label></section>`;
   $('#play').onclick=()=>start(levels.findIndex((_,i)=>!progress[i])<0?0:levels.findIndex((_,i)=>!progress[i]));
@@ -26,25 +25,27 @@ function renderHome(){
   $('#untimed').onchange=e=>{untimed=e.target.checked;};
 }
 
-async function start(index,previous=-1){
+async function start(index,previous=-1,previousPose=null){
   const ticket=++loadTicket;home=false;if(game)game.active=false;dialog.close();document.body.classList.add('playing');
   app.innerHTML='<div class="loading"><span class="brand-eye">◉◉</span><p>Espalhando a multidão…</p></div>';
-  try{await spriteReady;}catch{if(ticket===loadTicket){renderHome();toast('Não foi possível carregar o personagem. Recarregue a página.');}return;}
+  const posePool=levelPoses[index],poseId=posePool[chooseSpawn(posePool.length,posePool.indexOf(previousPose))];
+  let asset,castAssets;
+  try{[asset,castAssets]=await Promise.all([loadSprite(poses[poseId]),loadCast()]);}catch{if(ticket===loadTicket){renderHome();toast('Não foi possível carregar os personagens. Tente novamente.');}return;}
   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
   if(ticket!==loadTicket)return;
   const l=levels[index],people=makeCrowd(l),candidates=spawnCandidates(people),spawn=chooseSpawn(candidates.length,previous);
   if(!candidates.length){renderHome();toast('Não foi possível preparar esta fase.');return;}
-  const target=candidates[spawn],world=renderWorld(l,people,target,sprite);
-  game={index,l,people,target,spawn,world,seconds:l.duration,elapsed:0,errors:0,hints:0,active:true,paused:false,found:false,camera:{x:0,y:0,scale:1},hintUntil:0,miss:null,last:performance.now(),untimed};
+  const target=candidates[spawn],world=renderWorld(l,people,target,asset,castAssets);
+  game={index,l,people,target,spawn,world,asset,seconds:l.duration,elapsed:0,errors:0,hints:0,active:true,paused:false,found:false,camera:{x:0,y:0,scale:1},hintUntil:0,miss:null,last:performance.now(),untimed};
   app.innerHTML=`<section class="game-shell"><div class="game-heading"><button class="back quiet" id="back">← Destinos</button><div><span class="eyebrow">DESTINO 0${index+1} / 04 · ${l.place.toUpperCase()}</span><h1>${l.name}<span class="red">.</span></h1></div><div class="game-progress">${levels.map((_,i)=>`<span class="${i===index?'current':progress[i]?'done':''}">${progress[i]?'✓':i+1}</span>`).join('<i></i>')}</div></div>
-  <div class="hud"><div class="target-preview"><img src="./assets/flavio.png" alt="Personagem a encontrar"><div><small>SEU ALVO</small><b>O homem listrado</b></div></div><div class="stat"><small>${untimed?'MODO LIVRE':'TEMPO RESTANTE'}</small><b id="timer">${untimed?'Sem pressa':clock(l.duration)}</b></div><div class="stat"><small>PONTOS NESTA BUSCA</small><b id="points">0</b></div><div class="hud-actions"><button id="hint" class="hint-button">◉ Dica <small>−150 pts</small></button><button id="pause" class="icon-button" aria-label="Pausar jogo">Ⅱ</button><button id="restart" class="icon-button" aria-label="Reiniciar fase">↻</button></div></div>
+  <div class="hud"><div class="target-preview"><img src="${asset.meta.src}" alt="${asset.meta.label}"><div><small>SEU ALVO</small><b>${asset.meta.label}</b></div></div><div class="stat"><small>${untimed?'MODO LIVRE':'TEMPO RESTANTE'}</small><b id="timer">${untimed?'Sem pressa':clock(l.duration)}</b></div><div class="stat"><small>PONTOS NESTA BUSCA</small><b id="points">0</b></div><div class="hud-actions"><button id="hint" class="hint-button">◉ Dica <small>−150 pts</small></button><button id="pause" class="icon-button" aria-label="Pausar jogo">Ⅱ</button><button id="restart" class="icon-button" aria-label="Reiniciar fase">↻</button></div></div>
   <div class="scene-wrap" id="scene-wrap"><canvas id="scene" tabindex="0" role="application" aria-label="Cena de busca. Arraste para explorar. Use as setas para mover, mais e menos para ampliar, espaço para pausar. No teclado, o alvo é o centro da mira; pressione Enter para procurar ali."></canvas><div class="scene-caption"><span class="live-dot"></span> ${l.count} PESSOAS. UM FLÁVIO.</div><div class="zoom-controls"><button id="zoom-out" aria-label="Diminuir zoom">−</button><button id="reset-view" aria-label="Ver cena inteira">⌖</button><span id="zoom-label">100%</span><button id="zoom-in" aria-label="Aumentar zoom">+</button></div><div class="scene-instruction" id="scene-instruction">Arraste para explorar <span>·</span> Amplie para ver os detalhes</div></div><div class="game-footnote"><span>☞ Toque no personagem quando encontrá-lo. Um clique errado custa 3 segundos.</span><span>Setas: mover · +/−: zoom · Espaço: pausa</span></div></section>`;
   $('#back').onclick=renderHome;$('#hint').onclick=hint;$('#pause').onclick=pause;$('#restart').onclick=restart;
   setupCanvas();$('#zoom-in').onclick=()=>zoom(1.35);$('#zoom-out').onclick=()=>zoom(1/1.35);$('#reset-view').onclick=fit;
   fit();game.last=performance.now();$('#scene').focus({preventScroll:true});
 }
 
-function restart(){if(!game)return;const {index,spawn}=game;start(index,spawn);}
+function restart(){if(!game)return;const {index,spawn,asset}=game;start(index,spawn,asset.meta.id);}
 let viewport={w:0,h:0},resizeObserver;
 function fit(){if(!game)return;const s=Math.min(viewport.w/W,viewport.h/H);game.minScale=s;game.camera=clampCamera({scale:s,x:0,y:0},viewport.w,viewport.h,W,H);draw();}
 function zoom(factor,cx=viewport.w/2,cy=viewport.h/2){if(!game||game.paused||game.found)return;const c=game.camera,p=screenToWorld(cx,cy,c),scale=Math.max(game.minScale,Math.min(game.minScale*6,c.scale*factor));game.camera=clampCamera({scale,x:cx-p.x*scale,y:cy-p.y*scale},viewport.w,viewport.h,W,H);draw();}
@@ -81,10 +82,7 @@ function setupCanvas(){
 }
 function attempt(x,y){
   const g=game;if(!g||!g.active||g.paused||g.found)return;const p=screenToWorld(x,y,g.camera),b=g.world.box;
-  let hit=false;if(p.x>=b.x&&p.x<=b.x+b.w&&p.y>=b.y&&p.y<=b.y+b.h){
-    // Alpha testing excludes the transparent space around the exact source silhouette.
-    const buffer=document.createElement('canvas');buffer.width=sprite.width;buffer.height=sprite.height;const c=buffer.getContext('2d',{willReadFrequently:true});c.drawImage(sprite,0,0);const sx=Math.min(sprite.width-1,Math.floor((p.x-b.x)/b.w*sprite.width)),sy=Math.min(sprite.height-1,Math.floor((p.y-b.y)/b.h*sprite.height));hit=c.getImageData(sx,sy,1,1).data[3]>80;
-  }
+  const hit=hitSprite(p.x,p.y,b,g.asset);
   if(hit){finish();return;}g.errors++;g.seconds=penalize(g.seconds);g.miss={x,y,time:performance.now()};beep();toast(g.untimed?'Ainda não! −25 pontos no resultado.':'Ainda não! −3 segundos.');updateHud();draw();if(!g.untimed&&g.seconds<=0)timeout();
 }
 function updateHud(){if(!game||home)return;$('#timer').textContent=game.untimed?'Sem pressa':clock(game.seconds);$('#timer').classList.toggle('urgent',!game.untimed&&game.seconds<=20);$('#points').textContent=fmt(Math.max(0,-game.errors*25-game.hints*150));}

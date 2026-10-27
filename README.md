@@ -1,6 +1,6 @@
 # Onde Está o Flávio?
 
-**Developed by AK Labs** · MVP web 0.1.0 · 27/10/2026
+**Developed by AK Labs** · MVP web 0.2.0 · 27/10/2026
 
 Jogo de busca visual e sátira política para navegadores desktop e mobile. O jogador procura uma caricatura listrada em quatro multidões: Rio, Brasília, Buenos Aires e Orlando. Público: jogadores casuais que gostam de jogos de observação.
 
@@ -36,9 +36,17 @@ JavaScript ES Modules + Canvas 2D + CSS. Cenas fora da tela em 4104 × 2736 px; 
 - `docs/adr/`: decisões e limitações. `commercial/`: preparação comercial.
 - `backend/`, `mobile/`, `desktop/`, `integrations/`: reservados para expansão.
 
-## Estado das artes
+## Personagens fornecidos — versão 0.2.0
 
-O ZIP fornecido contém referências conceituais e uma prancha, **não** os sete PNGs de poses nem quatro cenários finais. Esta primeira edição usa a caricatura do Flávio da prancha e cenários vetoriais procedurais próprios, com 520/620/740/840 NPCs. As referências aparecem nas miniaturas e apresentação. As quatro poses distintas, a direção de arte detalhada do roteiro e a validação editorial final não estão concluídas.
+Os seis novos PNGs e a prancha de nove caricaturas foram integrados por solicitação direta do usuário. Os rostos e as cores originais foram mantidos, incluindo o traje vermelho/branco/azul. Essa solicitação atualiza a antiga restrição editorial de usar exclusivamente preto e branco.
+
+Cada partida tem um único alvo. Poses disponíveis: em pé, cadeira de praia, bandeira americana, carro, comemorando, apontando e a variante listrada da prancha. Oito coadjuvantes da prancha aparecem misturados aos personagens procedurais nos quatro destinos, na mesma profundidade e escala local. A miniatura identifica a pose em uso. Reiniciar troca posição e pose entre as alternativas do destino.
+
+Originais: `assets/personagens-fornecidos/`. Sprites preparados: `assets/web/cast/`, com remoção de margens transparentes e fragmentos desconectados; nenhum rosto foi redesenhado ou recolorido. `python scripts/prepare-cast.py` regenera o elenco usando Pillow, NumPy e OpenCV. Proveniência registrada no manifesto JSON. O jogo e o build não exigem Python.
+
+## Estado das artes na primeira entrega
+
+O ZIP inicial continha referências conceituais e uma prancha, sem os PNGs de poses nem os quatro cenários finais. As poses foram recebidas e integradas na versão 0.2.0. Os cenários continuam vetoriais procedurais, com 520/620/740/840 personagens. As referências aparecem nas miniaturas e apresentação. A direção de arte detalhada dos mapas e a validação editorial final permanecem pendentes.
 
 Para regenerar o recorte e as miniaturas, `python scripts/prepare-assets.py` exige Pillow, NumPy e OpenCV. Os arquivos gerados já acompanham o projeto; Python não é necessário para jogar ou compilar.
 

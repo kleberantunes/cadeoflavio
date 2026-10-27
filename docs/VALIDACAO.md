@@ -10,3 +10,12 @@ Developed by AK Labs · 27/10/2026
 - Sprite inspecionado sobre fundo claro após correção para preservar o gorro e pompom.
 
 Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou gestos de toque reais. A arte procedural não equivale aos mapas ilustrados finais descritos no roteiro. Revisão de oclusão artística e harmonização de traço do protagonista permanecem para a etapa de produção.
+
+## Atualização 0.2.0 — personagens fornecidos
+
+- 19 testes passaram, incluindo diversidade do elenco, alvo único, escala proporcional, regiões de clique e máscara alfa.
+- Build verifica a presença dos 15 sprites novos (seis poses, oito coadjuvantes e uma pose clássica da prancha).
+- Prancha técnica sobre fundo claro: inspecionados todos os recortes com transparência, preservando cores e feições.
+- Navegador: alvo com bandeira americana em Orlando, miniatura correspondente, zoom a 276%, clique válido e resultado de 1.000 pontos no modo livre.
+- Brasília: pose na cadeira de praia carregada; reinício alterou para pose dentro do carro e atualizou a miniatura.
+- Figurantes procedurais mantidos, com os coadjuvantes visíveis entre eles. Dispositivos físicos e harmonização artística final continuam pendentes.

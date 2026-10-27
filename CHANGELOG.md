@@ -2,6 +2,19 @@
 
 Developed by AK Labs
 
+## 0.2.0 — 2026-10-27
+
+### Adicionado
+- Seis poses transparentes fornecidas do protagonista, com as cores originais, selecionadas conforme o destino. Reiniciar também troca a pose quando houver alternativas.
+- Oito coadjuvantes extraídos da nova prancha de nove caricaturas em todas as multidões; a nona caricatura listrada é uma variação de alvo, mantendo um único Flávio por partida.
+- Miniatura e nome do alvo acompanham a pose efetivamente usada na fase. Detecção reutiliza a máscara alfa carregada, sem alocar canvas a cada clique.
+- Origens dos 15 sprites registradas em assets/web/cast/provenance.json. Originais preservados em assets/personagens-fornecidos.
+- Testes de integração do elenco, escala proporcional, exclusividade de alvo e transparência.
+
+### Alterado
+- Rosto e traje seguem os novos PNGs enviados pelo usuário; a solicitação atual substitui a antiga restrição do roteiro a listras pretas e brancas.
+- Poses cortadas na cintura aparecem atrás de floreiras para integrar os recortes à cena. Fundos procedurais e demais figurantes foram preservados.
+
 ## 0.1.0 — 2026-10-27
 
 ### Adicionado

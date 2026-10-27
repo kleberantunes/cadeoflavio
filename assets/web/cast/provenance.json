@@ -1,0 +1,95 @@
+{
+  "author": "Developed by AK Labs",
+  "sprites": [
+    {
+      "id": "standing",
+      "source": "01_em_pe.png",
+      "width": 290,
+      "height": 800
+    },
+    {
+      "id": "chair",
+      "source": "03_cadeira_de_praia.png",
+      "width": 318,
+      "height": 524
+    },
+    {
+      "id": "flag",
+      "source": "04_bandeira_americana.png",
+      "width": 444,
+      "height": 610
+    },
+    {
+      "id": "car",
+      "source": "05_dentro_do_carro.png",
+      "width": 1535,
+      "height": 900
+    },
+    {
+      "id": "celebrating",
+      "source": "06_comemorando.png",
+      "width": 424,
+      "height": 456
+    },
+    {
+      "id": "pointing",
+      "source": "07_apontando.png",
+      "width": 921,
+      "height": 1491
+    },
+    {
+      "id": "cast-01",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 287,
+      "height": 497
+    },
+    {
+      "id": "cast-02",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 266,
+      "height": 509
+    },
+    {
+      "id": "cast-03",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 246,
+      "height": 514
+    },
+    {
+      "id": "cast-04",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 268,
+      "height": 512
+    },
+    {
+      "id": "cast-05",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 297,
+      "height": 510
+    },
+    {
+      "id": "cast-06",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 274,
+      "height": 507
+    },
+    {
+      "id": "cast-07",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 269,
+      "height": 497
+    },
+    {
+      "id": "cast-08",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 252,
+      "height": 500
+    },
+    {
+      "id": "classic",
+      "source": "Nove Caricaturas Políticas em Grade.png",
+      "width": 302,
+      "height": 500
+    }
+  ]
+}
