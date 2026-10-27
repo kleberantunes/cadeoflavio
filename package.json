@@ -9,7 +9,7 @@
     "dev": "node scripts/server.mjs",
     "test": "node --test tests/*.test.mjs",
     "build": "node scripts/build.mjs",
-    "deploy:pages": "npm run build && wrangler pages deploy dist --project-name cadeoflavio --branch main --profile aklabs"
+    "deploy:pages": "npm run build && node scripts/deploy-pages.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.154.0"

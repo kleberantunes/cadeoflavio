@@ -16,7 +16,7 @@ npm run deploy:pages
 git push origin main
 ```
 
-O comando de publicação utiliza o perfil local `aklabs`. Em outro computador, autentique sua conta Cloudflare e use o perfil apropriado. Nenhuma credencial é armazenada neste repositório. O lockfile fixa as dependências usadas na publicação.
+O comando de publicação reutiliza o perfil local `aklabs` do `cf`: atualiza a sessão e transmite a credencial ao subprocesso Wrangler somente em memória, sem gravá-la ou imprimi-la. Os dois CLIs possuem armazenamentos separados. Em outro computador, autentique `cf auth create aklabs`, informe `CF_PROFILE_FILE` quando o perfil estiver em um caminho diferente, ou configure `CLOUDFLARE_API_TOKEN` no ambiente. A conta de destino é explicitamente a AKLabs. Nenhuma credencial é armazenada neste repositório. O lockfile fixa as dependências usadas na publicação.
 
 O projeto foi criado com `cf pages create --profile aklabs`. O `cf` instalado (1.0.0-beta.12) não implementa upload direto para o Pages clássico e orienta o uso do Wrangler. Por isso o projeto inclui a configuração Pages e uma dependência de desenvolvimento do Wrangler para upload dos arquivos compilados.
 
