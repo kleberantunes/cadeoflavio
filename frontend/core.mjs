@@ -1,5 +1,10 @@
 // Game rules and coordinate transforms. Developed by AK Labs.
-export const scoreLevel = (seconds, errors, hints) => Math.max(0, 1000 + Math.floor(seconds) * 10 - errors * 25 - hints * 150);
+export const ALLY_POINTS=250;
+export const scoreLevel = (seconds, errors, hints, allies=0) => Math.max(0, 1000 + Math.floor(seconds) * 10 - errors * 25 - hints * 150 + Math.min(8,Math.max(0,Math.floor(allies)))*ALLY_POINTS);
+export function claimAlly(found,id,availableIds){
+  if(!availableIds.includes(id)||found.includes(id))return {found,added:0};
+  return {found:[...found,id],added:ALLY_POINTS};
+}
 export const starsFor = (seconds, duration, hints) => hints > 1 ? 1 : hints === 0 && seconds > duration / 2 ? 3 : 2;
 export const penalize = seconds => Math.max(0, seconds - 3);
 export const screenToWorld = (x, y, camera) => ({ x: (x - camera.x) / camera.scale, y: (y - camera.y) / camera.scale });
@@ -17,6 +22,7 @@ export function safeProgress(input) {
   for (const [key, value] of Object.entries(input)) {
     if (!/^[0-3]$/.test(key) || !value || !Number.isInteger(value.score) || value.score < 0 || value.score > 10000 || !Number.isInteger(value.stars) || value.stars < 1 || value.stars > 3 || !Number.isFinite(value.seconds) || value.seconds < 0 || value.seconds > 86400) continue;
     output[key] = { score: value.score, stars: value.stars, seconds: value.seconds };
+    if(Number.isInteger(value.allies)&&value.allies>=0&&value.allies<=8)output[key].allies=value.allies;
   }
   return output;
 }

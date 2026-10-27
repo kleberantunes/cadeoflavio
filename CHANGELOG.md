@@ -2,6 +2,17 @@
 
 Developed by AK Labs
 
+## 0.4.0 — 2026-10-27
+
+### Adicionado
+- Oito aliados opcionais por fase, valendo 250 pontos por descoberta, sem recompensa duplicada.
+- Painel de retratos com marcação dos encontrados e contador. Total de pontos ao vivo e bônus discriminado no resultado.
+- Recorde local guarda também a quantidade de aliados da partida, preservando compatibilidade com os recordes antigos.
+
+### Melhorado
+- Detecção considera pixels visíveis da camada da frente: não é possível coletar um aliado através de outro personagem opaco.
+- Posições dos aliados selecionadas com espaço visível para o rosto. Encontrar Flávio continua encerrando a fase; os bônus são opcionais.
+
 ## 0.3.0 — 2026-10-27
 
 ### Melhorado

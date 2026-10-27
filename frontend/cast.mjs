@@ -12,7 +12,7 @@ export const poses={
 export const cast=Array.from({length:8},(_,i)=>pose(`cast-${`${i+1}`.padStart(2,'0')}`,`Coadjuvante ${i+1}`));
 export const levelPoses=[['standing','celebrating','classic'],['chair','car','standing'],['pointing','standing'],['flag','celebrating']];
 export function castForCrowd(people,target,levelIndex){
-  const plan=new Map(),pool=people.filter(p=>p!==target&&Math.hypot(p.x-target.x,p.y-target.y)>target.height*2&&p.x>100&&p.x<2300&&p.y>650&&p.y<1480);
+  const plan=new Map(),pool=people.filter(p=>p!==target&&Math.hypot(p.x-target.x,p.y-target.y)>target.height*2&&p.x>100&&p.x<2300&&p.y>650&&p.y<1480&&!people.some(q=>q!==p&&q.y>p.y&&q.y<p.y+p.height*.55&&Math.abs(q.x-p.x)<p.height*.32));
   for(let i=0;i<cast.length;i++){
     const offset=Math.floor((i+.5)*pool.length/cast.length);
     const person=pool[(offset+levelIndex*19)%pool.length];

@@ -1,6 +1,6 @@
 // Original deterministic illustrated scenes. Developed by AK Labs.
 import { castForCrowd, spriteBox } from './cast.mjs';
-import {planCrowdSprites,drawCrowdPerson} from './crowd.mjs';
+import {planCrowdSprites,drawCrowdPerson,crowdPersonBox} from './crowd.mjs';
 export const W = 2400, H = 1600;
 export const levels = [
   { name: 'Cadê no Rio?', place: 'Rio de Janeiro', country: 'BRASIL', slug: 'rio', color: '#e9ab64', count: 520, duration: 120, tag: 'Primeira parada', description: 'Entre lajes, música e muita gente, alguém resolveu se misturar.', stamp: 'RIO', seed: 23 },
@@ -74,7 +74,7 @@ function architecture(c, level) {
 export function renderWorld(level, people, target, targetAsset, castAssets, crowdArtwork, resolution=1.71) {
   const canvas=document.createElement('canvas');canvas.width=Math.round(W*resolution);canvas.height=Math.round(H*resolution);
   const c=canvas.getContext('2d');c.scale(resolution,resolution);architecture(c,level);
-  let box;
+  let box;const layers=[],allies=[];
   const castPlan=castForCrowd(people,target,levels.indexOf(level));
   const crowdPlan=planCrowdSprites(people,levels.indexOf(level));
   for(const p of people){
@@ -82,15 +82,22 @@ export function renderWorld(level, people, target, targetAsset, castAssets, crow
     if(asset){
       const b=spriteBox(p,asset);
       if(p===target)box=b;
+      const layer={type:p===target?'target':'ally',id:asset.meta.id,box:b,asset};
+      layers.push(layer);if(layer.type==='ally')allies.push(layer);
       c.fillStyle='#625a4633';c.beginPath();c.ellipse(p.x,p.y,Math.min(b.w*.4,p.height*.6),p.height*.045,0,0,Math.PI*2);c.fill();
       c.drawImage(asset.image,b.x,b.y,b.w,b.h);
       // Waist-up supplied poses emerge behind a planter, concealing the cut edge.
       if(asset.meta.lift>0&&asset.meta.id!=='flag'){
         const y=b.y+b.h-6;
+        layer.occluder={x:b.x-5,y:y-6,w:b.w+10,h:24};
         rect(c,b.x-5,y,b.w+10,18,'#b99c78');
         for(let k=0;k<5;k++)circle(c,b.x+k*b.w/4,y,6,['#7d9568','#a1a574','#66876d'][k%3]);
       }
-    } else drawCrowdPerson(c,p,crowdPlan.get(p.id),crowdArtwork);
+    } else {
+      const item=crowdPlan.get(p.id);
+      drawCrowdPerson(c,p,item,crowdArtwork);
+      layers.push({type:'npc',box:crowdPersonBox(p,item),frame:item.frame,mirror:item.mirror,artwork:crowdArtwork});
+    }
   }
-  return {canvas, box, castPlan};
+  return {canvas, box, castPlan,allies,layers};
 }

@@ -26,11 +26,23 @@ export function planCrowdSprites(people,levelIndex){
 }
 let pending;
 export function loadCrowdArtwork(){
-  pending??=(async()=>{const image=new Image();image.src=NPC_ATLAS;await image.decode();return {image};})().catch(error=>{pending=null;throw error;});
+  pending??=(async()=>{
+    const image=new Image();image.src=NPC_ATLAS;await image.decode();
+    const mask=document.createElement('canvas');mask.width=image.width;mask.height=image.height;
+    const c=mask.getContext('2d',{willReadFrequently:true});c.drawImage(image,0,0);
+    const pixels=c.getImageData(0,0,image.width,image.height).data,alpha=new Uint8Array(image.width*image.height);
+    for(let i=0;i<alpha.length;i++)alpha[i]=pixels[i*4+3];
+    mask.width=0;mask.height=0;
+    return {image,alpha,width:image.width};
+  })().catch(error=>{pending=null;throw error;});
   return pending;
 }
-export function drawCrowdPerson(c,p,item,artwork){
+export function crowdPersonBox(p,item){
   const f=item.frame,h=p.height*1.04*f.heightScale,w=h*f.w/f.h;
+  return {x:p.x-w/2,y:p.y-h,w,h};
+}
+export function drawCrowdPerson(c,p,item,artwork){
+  const f=item.frame,{w,h}=crowdPersonBox(p,item);
   c.fillStyle='#4c382b30';c.beginPath();c.ellipse(p.x,p.y+1,Math.min(w*.34,p.height*.28),p.height*.04,0,0,Math.PI*2);c.fill();
   c.save();c.translate(p.x,p.y);if(item.mirror)c.scale(-1,1);
   c.drawImage(artwork.image,f.x,f.y,f.w,f.h,-w/2,-h,w,h);c.restore();

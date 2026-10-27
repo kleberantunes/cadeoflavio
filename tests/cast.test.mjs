@@ -24,6 +24,19 @@ test('all sprites preserve their aspect ratio and nearby adult scale',()=>{
     assert.ok(box.h<=110&&box.h>=50);
   }
 });
+test('all valid target positions leave eight distinct fair bonus positions in every destination',()=>{
+  for(const [i,level] of levels.entries()){
+    const people=makeCrowd(level);
+    for(const target of spawnCandidates(people)){
+      const plan=castForCrowd(people,target,i);
+      assert.equal(plan.size,8);assert.equal(new Set(plan.values()).size,8);
+      for(const id of plan.keys()){
+        const p=people.find(q=>q.id===id);
+        assert.ok(!people.some(q=>q!==p&&q.y>p.y&&q.y<p.y+p.height*.55&&Math.abs(q.x-p.x)<p.height*.32));
+      }
+    }
+  }
+});
 test('car and flag are scenery props, not additional clickable targets',()=>{
   assert.equal(inHitRegion(.1,.8,poses.car),false);
   assert.equal(inHitRegion(.65,.3,poses.car),true);

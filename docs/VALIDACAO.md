@@ -39,3 +39,10 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Sprites fornecidos do Flávio e das caricaturas preservados. Arquitetura dos cenários e regras de progresso mantidas.
 - Publicação Cloudflare confirmada: deployment `1e15ea5c-4a37-478e-9da3-c058de4dd3dd`, estágio `success`. Atlas público retornou HTTP 200 com 44 frames.
 - Site público: Orlando carregado com 840 pessoas e zoom de 246%, com as novas ilustrações visíveis. Prévia capturada para revisão do usuário.
+
+## 0.4.0 — aliados bônus
+
+- 31 testes passaram, incluindo recompensa única por identidade, bônus com penalidades, compatibilidade dos recordes, pixels transparentes, sobreposição de figurantes e oito aliados distintos em todos os spawns das quatro fases.
+- Navegador local: painel de oito retratos carregado; clicar no aliado 6 em zoom 246% marcou o retrato, atualizou para 1/8 e concedeu 250 pontos. Repetir o clique manteve 250 e exibiu a mensagem de já encontrado.
+- Partida concluída em Buenos Aires com um aliado, uma dica e três erros no modo livre: resultado de 1.025 pontos (1.000 +250 −150 −75). Resultado discriminou 1/8 aliados e +250 pontos bônus.
+- Detecção passou a considerar as camadas opacas da frente. Clicar em um figurante comum continuou aplicando a penalidade, sem coletar o aliado atrás dele.
