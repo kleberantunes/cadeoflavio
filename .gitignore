@@ -1,0 +1,9 @@
+node_modules/
+dist/
+build/
+release/*.zip
+work/
+.env*
+.sites-runtime/
+.sites-checkout/
+*.log
