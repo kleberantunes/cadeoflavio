@@ -37,3 +37,5 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - 24 testes passaram: cobertura de todos os NPCs das quatro fases, variedade de pelo menos 38 recortes por cena, distrações listradas, determinismo e todas as regras anteriores.
 - Navegador: Rio carregado com 520 pessoas ilustradas, zoom verificado em 246% e 276%, dica e acerto no alvo clássico. Resultado observado: 850 pontos no modo livre após uma dica.
 - Sprites fornecidos do Flávio e das caricaturas preservados. Arquitetura dos cenários e regras de progresso mantidas.
+- Publicação Cloudflare confirmada: deployment `1e15ea5c-4a37-478e-9da3-c058de4dd3dd`, estágio `success`. Atlas público retornou HTTP 200 com 44 frames.
+- Site público: Orlando carregado com 840 pessoas e zoom de 246%, com as novas ilustrações visíveis. Prévia capturada para revisão do usuário.
