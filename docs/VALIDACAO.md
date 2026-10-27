@@ -29,3 +29,11 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - GitHub `kleberantunes/cadeoflavio`: privado, branch principal `main`, código enviado.
 - `npm test`: 19 testes passaram; `npm run build`: concluído antes do upload.
 - Integração Git nativa não ativada por erro de instalação Cloudflare 8000011. Upload direto concluído com Wrangler, usando a sessão existente do cf somente em memória.
+
+## 0.3.0 — figurantes ilustrados
+
+- Três pranchas de autoria geradas pela ferramenta integrada image_gen seguindo o acabamento do template fornecido; 44 recortes completos selecionados e conferidos sobre fundo claro.
+- Atlas transparente WebP de aproximadamente 1,35 MB; separação e empacotamento automáticos, preservando rostos, mãos, roupas e acessórios da arte selecionada.
+- 24 testes passaram: cobertura de todos os NPCs das quatro fases, variedade de pelo menos 38 recortes por cena, distrações listradas, determinismo e todas as regras anteriores.
+- Navegador: Rio carregado com 520 pessoas ilustradas, zoom verificado em 246% e 276%, dica e acerto no alvo clássico. Resultado observado: 850 pontos no modo livre após uma dica.
+- Sprites fornecidos do Flávio e das caricaturas preservados. Arquitetura dos cenários e regras de progresso mantidas.

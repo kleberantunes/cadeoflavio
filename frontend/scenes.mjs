@@ -1,5 +1,6 @@
 // Original deterministic illustrated scenes. Developed by AK Labs.
 import { castForCrowd, spriteBox } from './cast.mjs';
+import {planCrowdSprites,drawCrowdPerson} from './crowd.mjs';
 export const W = 2400, H = 1600;
 export const levels = [
   { name: 'Cadê no Rio?', place: 'Rio de Janeiro', country: 'BRASIL', slug: 'rio', color: '#e9ab64', count: 520, duration: 120, tag: 'Primeira parada', description: 'Entre lajes, música e muita gente, alguém resolveu se misturar.', stamp: 'RIO', seed: 23 },
@@ -70,32 +71,12 @@ function architecture(c, level) {
   for(let i=0;i<12;i++){const x=100+r()*2200,y=780+r()*700;circle(c,x,y,38,'#f4e5c0',true);circle(c,x,y,29,'#d6bd8e');for(let j=0;j<3;j++)circle(c,x-16+j*16,y-3,6,'#f5f0d6');}
   for(let i=0;i<8;i++){const x=40+i*330,y=900+(i%3)*230;rect(c,x,y,70,10,'#987759');rect(c,x+6,y-5,4,25,'#655b48');rect(c,x+60,y-5,4,25,'#655b48');}
 }
-const skins=['#edc198','#ce966f','#a97050','#795140','#f2ceb0','#b8805e'];
-const clothes=['#cc745e','#7b95a6','#e2b85d','#f0e5c4','#53696c','#a5889b','#80a187','#c68b65','#404c53','#c9c7aa','#ae6060','#668a9b'];
-function person(c,p) {
-  c.save();c.translate(p.x,p.y);const h=p.height,s=h/80;c.scale(s,s);c.lineCap='round';c.lineJoin='round';
-  c.fillStyle='#625a4633';c.beginPath();c.ellipse(1,1,17,4,0,0,Math.PI*2);c.fill();
-  const skin=skins[p.skin],shirt=clothes[p.shirt],dark='#50463d',leg=p.seed<.4?'#526f80':'#655c57';
-  c.strokeStyle=dark;c.lineWidth=2;
-  path(c,[[-12,-37],[-2,-37],[-3,-4],[-13,-4]],leg,dark);path(c,[[1,-37],[11,-37],[14,-4],[4,-4]],leg,dark);
-  rect(c,-15,-4,13,5,'#514b45');rect(c,3,-4,15,5,'#514b45');
-  path(c,[[-11,-62],[10,-62],[16,-36],[-16,-36]],shirt,dark);
-  if(p.striped){c.save();c.beginPath();c.moveTo(-11,-62);c.lineTo(10,-62);c.lineTo(16,-36);c.lineTo(-16,-36);c.clip();for(let j=0;j<5;j++)rect(c,-18,-61+j*6,36,3,p.seed>.5?'#f5e8d0':'#484744',false);c.restore();}
-  c.strokeStyle=skin;c.lineWidth=7;c.beginPath();c.moveTo(-12,-59);c.lineTo(-20,p.pose===0?-77:-36);c.moveTo(12,-59);c.lineTo(p.pose===1?24:21,p.pose===1?-78:-40);c.stroke();
-  if(p.pose===3){rect(c,12,-55,14,18,'#8b6e4f');rect(c,13,-54,12,5,'#c1a777');}
-  if(p.pose===4){c.strokeStyle='#6a5f4b';c.lineWidth=2;c.beginPath();c.moveTo(23,-35);c.lineTo(23,-105);c.stroke();rect(c,23,-105,34,22,p.skin%2?'#e4c671':'#94b9bf');rect(c,23,-98,34,7,'#f6eed9',false);}
-  circle(c,0,-70,10,skin,true);c.fillStyle=dark;c.beginPath();c.ellipse(0,-76,10,5,0,Math.PI,Math.PI*2);c.fill();
-  circle(c,3,-71,1.2,dark);c.strokeStyle='#8a5a49';c.lineWidth=1;c.beginPath();c.moveTo(1,-66);c.lineTo(5,-66);c.stroke();
-  if(p.hat){rect(c,-12,-83,25,6,p.striped?'#eee7d6':shirt);rect(c,-7,-88,16,7,p.striped?'#56534c':shirt);}
-  if(p.pose===5){circle(c,20,-94,13,['#d59186','#d6b45f','#7c9e9d'][p.skin%3],true);c.strokeStyle='#87755d';c.lineWidth=1;c.beginPath();c.moveTo(20,-80);c.lineTo(19,-41);c.stroke();}
-  if(p.seed<.15){rect(c,-7,-72,6,4,'#4f4d48');rect(c,2,-72,6,4,'#4f4d48');}
-  c.restore();
-}
-export function renderWorld(level, people, target, targetAsset, castAssets={}, resolution=1.71) {
+export function renderWorld(level, people, target, targetAsset, castAssets, crowdArtwork, resolution=1.71) {
   const canvas=document.createElement('canvas');canvas.width=Math.round(W*resolution);canvas.height=Math.round(H*resolution);
   const c=canvas.getContext('2d');c.scale(resolution,resolution);architecture(c,level);
   let box;
   const castPlan=castForCrowd(people,target,levels.indexOf(level));
+  const crowdPlan=planCrowdSprites(people,levels.indexOf(level));
   for(const p of people){
     const asset=p===target?targetAsset:castAssets[castPlan.get(p.id)];
     if(asset){
@@ -109,7 +90,7 @@ export function renderWorld(level, people, target, targetAsset, castAssets={}, r
         rect(c,b.x-5,y,b.w+10,18,'#b99c78');
         for(let k=0;k<5;k++)circle(c,b.x+k*b.w/4,y,6,['#7d9568','#a1a574','#66876d'][k%3]);
       }
-    } else person(c,p);
+    } else drawCrowdPerson(c,p,crowdPlan.get(p.id),crowdArtwork);
   }
   return {canvas, box, castPlan};
 }

@@ -1,6 +1,7 @@
 import { scoreLevel, starsFor, screenToWorld, clampCamera, chooseSpawn, penalize, safeProgress } from './core.mjs';
 import { levels, makeCrowd, spawnCandidates, renderWorld, W, H } from './scenes.mjs';
 import { poses, levelPoses, loadSprite, loadCast, hitSprite } from './cast.mjs';
+import {loadCrowdArtwork} from './crowd.mjs';
 
 const $=s=>document.querySelector(s), app=$('#app'), dialog=$('#dialog');
 let progress={}, sound=false, untimed=false, audio, game=null, home=true, loadTicket=0;
@@ -29,13 +30,13 @@ async function start(index,previous=-1,previousPose=null){
   const ticket=++loadTicket;home=false;if(game)game.active=false;dialog.close();document.body.classList.add('playing');
   app.innerHTML='<div class="loading"><span class="brand-eye">◉◉</span><p>Espalhando a multidão…</p></div>';
   const posePool=levelPoses[index],poseId=posePool[chooseSpawn(posePool.length,posePool.indexOf(previousPose))];
-  let asset,castAssets;
-  try{[asset,castAssets]=await Promise.all([loadSprite(poses[poseId]),loadCast()]);}catch{if(ticket===loadTicket){renderHome();toast('Não foi possível carregar os personagens. Tente novamente.');}return;}
+  let asset,castAssets,crowdArtwork;
+  try{[asset,castAssets,crowdArtwork]=await Promise.all([loadSprite(poses[poseId]),loadCast(),loadCrowdArtwork()]);}catch{if(ticket===loadTicket){renderHome();toast('Não foi possível carregar os personagens. Tente novamente.');}return;}
   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
   if(ticket!==loadTicket)return;
   const l=levels[index],people=makeCrowd(l),candidates=spawnCandidates(people),spawn=chooseSpawn(candidates.length,previous);
   if(!candidates.length){renderHome();toast('Não foi possível preparar esta fase.');return;}
-  const target=candidates[spawn],world=renderWorld(l,people,target,asset,castAssets);
+  const target=candidates[spawn],world=renderWorld(l,people,target,asset,castAssets,crowdArtwork);
   game={index,l,people,target,spawn,world,asset,seconds:l.duration,elapsed:0,errors:0,hints:0,active:true,paused:false,found:false,camera:{x:0,y:0,scale:1},hintUntil:0,miss:null,last:performance.now(),untimed};
   app.innerHTML=`<section class="game-shell"><div class="game-heading"><button class="back quiet" id="back">← Destinos</button><div><span class="eyebrow">DESTINO 0${index+1} / 04 · ${l.place.toUpperCase()}</span><h1>${l.name}<span class="red">.</span></h1></div><div class="game-progress">${levels.map((_,i)=>`<span class="${i===index?'current':progress[i]?'done':''}">${progress[i]?'✓':i+1}</span>`).join('<i></i>')}</div></div>
   <div class="hud"><div class="target-preview"><img src="${asset.meta.src}" alt="${asset.meta.label}"><div><small>SEU ALVO</small><b>${asset.meta.label}</b></div></div><div class="stat"><small>${untimed?'MODO LIVRE':'TEMPO RESTANTE'}</small><b id="timer">${untimed?'Sem pressa':clock(l.duration)}</b></div><div class="stat"><small>PONTOS NESTA BUSCA</small><b id="points">0</b></div><div class="hud-actions"><button id="hint" class="hint-button">◉ Dica <small>−150 pts</small></button><button id="pause" class="icon-button" aria-label="Pausar jogo">Ⅱ</button><button id="restart" class="icon-button" aria-label="Reiniciar fase">↻</button></div></div>

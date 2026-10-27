@@ -1,10 +1,10 @@
 # Onde Está o Flávio?
 
-**Developed by AK Labs** · MVP web 0.2.0 · 27/10/2026
+**Developed by AK Labs** · MVP web 0.3.0 · 27/10/2026
 
 Jogo de busca visual e sátira política para navegadores desktop e mobile. O jogador procura uma caricatura listrada em quatro multidões: Rio, Brasília, Buenos Aires e Orlando. Público: jogadores casuais que gostam de jogos de observação.
 
-**Jogar:** https://cadeoflavio.pages.dev · **Código privado:** https://github.com/kleberantunes/cadeoflavio
+**Jogar:** https://cadeoflavio.pages.dev · **Código público:** https://github.com/kleberantunes/cadeoflavio
 
 Para publicar atualizações, consulte `docs/PUBLICACAO.md`. O site usa Cloudflare Pages por upload direto; push no GitHub não dispara publicação automática.
 
@@ -41,6 +41,8 @@ JavaScript ES Modules + Canvas 2D + CSS. Cenas fora da tela em 4104 × 2736 px; 
 - `backend/`, `mobile/`, `desktop/`, `integrations/`: reservados para expansão.
 
 ## Personagens fornecidos — versão 0.2.0
+
+Na versão 0.3.0, os figurantes geométricos foram substituídos por **44 pessoas ilustradas** com rostos expressivos, anatomia, volume e sombras próximos do acabamento do template. Os personagens fornecidos continuam intactos. O novo elenco está em `assets/npc-art-v3/`, com prompts e fontes; o jogo carrega um único atlas WebP em `assets/web/crowd/`. Para regenerar o atlas, execute `python scripts/prepare-npc-atlas.py` no ambiente de autoria com Pillow, NumPy e OpenCV. Python não é necessário para jogar ou compilar o site.
 
 Os seis novos PNGs e a prancha de nove caricaturas foram integrados por solicitação direta do usuário. Os rostos e as cores originais foram mantidos, incluindo o traje vermelho/branco/azul. Essa solicitação atualiza a antiga restrição editorial de usar exclusivamente preto e branco.
 

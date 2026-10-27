@@ -2,6 +2,15 @@
 
 Developed by AK Labs
 
+## 0.3.0 — 2026-10-27
+
+### Melhorado
+- Figurantes das quatro cenas substituídos por 44 pessoas ilustradas com rostos, mãos, roupas e sombras mais próximos do template fornecido.
+- Variedade de idades aparentes, tons de pele, tipos físicos, roupas, gestos e acessórios; distribuição contextual e prevenção de clones muito próximos.
+- Atlas WebP transparente único para preservar o carregamento e a renderização eficiente das multidões.
+- Mantidos os sprites fornecidos do alvo e coadjuvantes, a densidade das quatro fases, as distrações listradas, zoom e progresso local.
+- Prompts e arquivos-fonte de arte registrados; testes verificam variedade e cobertura de todos os figurantes.
+
 ## Publicação — 2026-10-27
 
 - Repositório privado `kleberantunes/cadeoflavio` criado com o histórico do projeto.

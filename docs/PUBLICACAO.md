@@ -3,7 +3,7 @@
 Developed by AK Labs · 27/10/2026
 
 - Site público: https://cadeoflavio.pages.dev
-- Repositório privado: https://github.com/kleberantunes/cadeoflavio
+- Repositório público: https://github.com/kleberantunes/cadeoflavio
 - Cloudflare: conta AKLabs, projeto Pages `cadeoflavio`, branch de produção `main`.
 - Configuração de publicação: `wrangler.jsonc`; saída estática `dist/`.
 
