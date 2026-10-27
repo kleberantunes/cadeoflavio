@@ -2,6 +2,12 @@
 
 Developed by AK Labs
 
+## Estatísticas de acesso — 2026-10-27
+
+- Cloudflare Web Analytics ativado para `cadeoflavio.pages.dev` pela integração nativa do Pages.
+- Painel de visitas, visualizações, países, referências, dispositivos e navegadores; sem cookies de analytics ou localização por GPS.
+- Configuração e instruções do painel registradas em `docs/ANALYTICS.md`. A medição começa nesta ativação, sem recuperar acessos anteriores.
+
 ## 0.4.0 — 2026-10-27
 
 ### Adicionado

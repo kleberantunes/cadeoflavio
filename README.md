@@ -6,7 +6,7 @@ Jogo de busca visual e sátira política para navegadores desktop e mobile. O jo
 
 **Jogar:** https://cadeoflavio.pages.dev · **Código público:** https://github.com/kleberantunes/cadeoflavio
 
-Para publicar atualizações, consulte `docs/PUBLICACAO.md`. O site usa Cloudflare Pages por upload direto; push no GitHub não dispara publicação automática.
+Para publicar atualizações, consulte `docs/PUBLICACAO.md`. O site usa Cloudflare Pages por upload direto; push no GitHub não dispara publicação automática. Visitas, visualizações e países de origem podem ser consultados no Cloudflare Web Analytics, conforme `docs/ANALYTICS.md`.
 
 ## Executar
 

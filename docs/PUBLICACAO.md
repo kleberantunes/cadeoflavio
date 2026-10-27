@@ -23,3 +23,7 @@ O projeto foi criado com `cf pages create --profile aklabs`. O `cf` instalado (1
 A tentativa de integração nativa GitHub → Pages retornou o erro Cloudflare 8000011 na instalação Git. A publicação atual é por upload direto. **Push no GitHub não publica o site automaticamente.** O repositório é a origem versionada do código, e `npm run deploy:pages` atualiza o site. Uma automação futura precisa de configuração própria e credenciais com escopo adequado.
 
 A URL privada da primeira hospedagem Sites permanece separada; esta publicação Pages permite jogar sem login.
+
+## Estatísticas de acesso
+
+Cloudflare Web Analytics está habilitado no projeto Pages. O beacon é inserido pela hospedagem no próximo deployment e deve aparecer uma única vez no HTML público. Consulte `docs/ANALYTICS.md` para o painel, métricas, limites da localização por país e configuração. Preserve `build_config.web_analytics_tag` e `build_config.web_analytics_token` ao editar a configuração remota do Pages.
