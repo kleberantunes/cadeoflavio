@@ -46,3 +46,4 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Navegador local: painel de oito retratos carregado; clicar no aliado 6 em zoom 246% marcou o retrato, atualizou para 1/8 e concedeu 250 pontos. Repetir o clique manteve 250 e exibiu a mensagem de já encontrado.
 - Partida concluída em Buenos Aires com um aliado, uma dica e três erros no modo livre: resultado de 1.025 pontos (1.000 +250 −150 −75). Resultado discriminou 1/8 aliados e +250 pontos bônus.
 - Detecção passou a considerar as camadas opacas da frente. Clicar em um figurante comum continuou aplicando a penalidade, sem coletar o aliado atrás dele.
+- Publicação confirmada no Cloudflare: deployment `454f563b-715b-4b03-b167-a6ff8d5feb19`, estágio `success`. app.mjs público retornou HTTP 200 com o painel e a regra de bônus. Rio carregado no site público com 0/8 aliados e instrução de +250 por aliado.
