@@ -1,4 +1,4 @@
-import { mkdir, cp, readdir, stat, writeFile, rm } from 'node:fs/promises';
+import { mkdir, cp, readdir, stat, readFile, writeFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import {poses,cast} from '../frontend/cast.mjs';
 import adsConfig from '../frontend/ads-config.mjs';
@@ -10,6 +10,10 @@ if(adsConfig.publisherId){
   await writeFile(path.join(out,'ads.txt'),`google.com, ${adsConfig.publisherId.slice(3)}, DIRECT, f08c47fec0942fa0\n`);
 }else await rm(path.join(out,'ads.txt'),{force:true});
 for(const name of await readdir(path.join(root,'frontend'))) await cp(path.join(root,'frontend',name),path.join(out,name),{recursive:true});
+const indexPath=path.join(out,'index.html'),index=await readFile(indexPath,'utf8');
+if(!index.includes('<!-- ADSENSE_ACCOUNT -->'))throw new Error('Missing AdSense account markup placeholder');
+const accountMarkup=adsConfig.publisherId?`<meta name="google-adsense-account" content="${adsConfig.publisherId}">\n<script id="google-adsense" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsConfig.publisherId}" crossorigin="anonymous" data-ad-client="${adsConfig.publisherId}" data-ad-frequency-hint="120s"></script>`:'';
+await writeFile(indexPath,index.replace('<!-- ADSENSE_ACCOUNT -->',accountMarkup));
 await cp(path.join(root,'assets','web'),path.join(out,'assets'),{recursive:true});
 const sprite=await stat(path.join(out,'assets','flavio.png'));
 if(sprite.size<1000)throw new Error('Missing target sprite');

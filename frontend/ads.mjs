@@ -15,15 +15,18 @@ export function createGameAds(config,{win=globalThis.window,doc=globalThis.docum
       try{
         win.adsbygoogle=win.adsbygoogle||[];
         win.adBreak=win.adConfig=options=>win.adsbygoogle.push(options);
-        const script=doc.createElement('script');
+        const existing=doc.getElementById('google-adsense');
+        const src=`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${config.publisherId}`;
+        if(existing&&existing.src!==src){finish(false);return;}
+        const script=existing||doc.createElement('script');
         script.async=true;script.crossOrigin='anonymous';
-        script.src=`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${config.publisherId}`;
+        script.src=src;
         script.dataset.adClient=config.publisherId;
         script.dataset.adFrequencyHint='120s';
         if(config.testMode)script.dataset.adbreakTest='on';
         script.onerror=()=>finish(false);
         win.adConfig({preloadAdBreaks:'on',sound:'off',onReady:()=>finish(true)});
-        doc.head.append(script);
+        if(!existing){script.id='google-adsense';doc.head.append(script);}
       }catch{finish(false);}
     });
     return readiness;

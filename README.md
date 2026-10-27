@@ -1,6 +1,6 @@
 # Onde Está o Flávio?
 
-**Developed by AK Labs** · MVP web 0.5.0 · 27/10/2026
+**Developed by AK Labs** · MVP web 0.5.1 · 27/10/2026
 
 Jogo de busca visual e sátira política para navegadores desktop e mobile. O jogador procura uma caricatura listrada em quatro multidões: Rio, Brasília, Buenos Aires e Orlando. Público: jogadores casuais que gostam de jogos de observação.
 
@@ -8,7 +8,7 @@ Jogo de busca visual e sátira política para navegadores desktop e mobile. O jo
 
 Para publicar atualizações, consulte `docs/PUBLICACAO.md`. O site usa Cloudflare Pages por upload direto; push no GitHub não dispara publicação automática. Visitas, visualizações e países de origem podem ser consultados no Cloudflare Web Analytics, conforme `docs/ANALYTICS.md`.
 
-A versão 0.5.0 prepara a integração oficial Google AdSense H5 Games Ads antes da primeira partida. **Anúncios ainda desativados**, aguardando identificação da conta, liberação H5, aprovação do site e configuração de consentimento. Consulte `docs/MONETIZACAO.md` para ativação; o jogo continua sem anúncios enquanto isso.
+A integração oficial Google AdSense H5 Games Ads está preparada antes da primeira partida. O ID de editor fornecido está vinculado ao código de conexão e ao ads.txt. **Solicitações H5 ainda desativadas**, aguardando liberação H5, aprovação do site e configuração de consentimento. Consulte `docs/MONETIZACAO.md` para ativação.
 
 ## Executar
 

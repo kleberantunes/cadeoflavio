@@ -2,6 +2,13 @@
 
 Developed by AK Labs
 
+## 0.5.1 — 2026-10-27
+
+- ID AdSense fornecido pelo usuário vinculado à configuração pública e à geração de ads.txt.
+- Build insere a meta tag e o script assíncrono de conexão com o editor correto no HTML inicial.
+- Integração H5 reutiliza o SDK da página, evitando carregamento duplicado ao ser habilitada. Novo teste cobre essa condição; 38 testes passaram.
+- Conta e cadastro do site identificados na sessão Google. Solicitações de anúncio H5 permanecem desativadas durante a preparação e aprovação pelo Google.
+
 ## 0.5.0 — 2026-10-27
 
 ### Preparado

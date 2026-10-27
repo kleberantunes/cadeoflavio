@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import {createGameAds} from '../frontend/ads.mjs';
 
 const config={enabled:true,publisherId:'ca-pub-1234567890123456',testMode:false};
-function harness(settings=config){
+function harness(settings=config,existingScript=null){
   const scripts=[],requests=[],timers=new Map();let timerId=0;
   const win={location:{hostname:'localhost'}};
-  const doc={createElement:()=>({dataset:{}}),head:{append:el=>scripts.push(el)}};
+  const doc={getElementById:()=>existingScript,createElement:()=>({dataset:{}}),head:{append:el=>scripts.push(el)}};
   const ads=createGameAds(settings,{win,doc,schedule:fn=>{timers.set(++timerId,fn);return timerId;},cancel:id=>timers.delete(id)});
   const ready=()=>{
     const queued=win.adsbygoogle.splice(0);
@@ -76,4 +76,13 @@ test('cancelled navigation never opens a late ad on the home screen',async()=>{
 test('test creatives cannot be enabled on the public host',async()=>{
   const h=harness({...config,testMode:true});h.win.location.hostname='cadeoflavio.pages.dev';
   assert.equal((await h.ads.beforeGame()).status,'disabled');assert.equal(h.scripts.length,0);
+});
+
+test('H5 reuses the publisher verification script without loading a duplicate SDK',async()=>{
+  const existing={src:`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${config.publisherId}`,dataset:{}};
+  const h=harness(config,existing),result=h.ads.beforeGame();
+  assert.equal(h.scripts.length,0);
+  h.ready();await Promise.resolve();
+  h.requests[0].adBreakDone({breakStatus:'noAdPreloaded'});
+  assert.equal((await result).status,'noAdPreloaded');
 });

@@ -3,6 +3,6 @@
 // Developed by AK Labs.
 export default Object.freeze({
   enabled:false,
-  publisherId:'',
+  publisherId:'ca-pub-3370399904738754',
   testMode:false,
 });
