@@ -56,3 +56,12 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Navegador no endereço público carregou a tela inicial e confirmou um único script Cloudflare Insights no DOM.
 - Build estático concluído. Não houve alteração nas regras do jogo; os 31 testes da versão 0.4.0 continuam sendo a referência da lógica.
 - Os totais processados no painel não foram verificados nesta ativação. A coleta começa agora, sem histórico retroativo; localização disponível por país.
+
+## 0.5.0 — preparação Google H5 Games Ads
+
+- 37 testes passaram: seis novos cenários de anúncios e as 31 verificações anteriores do jogo.
+- Fluxo publicitário testado com adaptador local: aguarda encerramento, não repete a solicitação, continua sem inventário/frequência, recupera falha do SDK e ignora inicialização tardia após timeout.
+- Navegação cancelada não dispara anúncio tardio. Configuração vazia não carrega scripts do Google; modo de teste não é aceito no host público.
+- Navegador local: Rio carregou com timer, canvas e oito aliados, sem script de publicidade e sem erros de console; página de privacidade aberta pelo rodapé e texto conferido.
+- Build concluído. Sem ID de editor, ads.txt não é gerado com dados fictícios.
+- Sessão Google consultada no Chrome exibiu Ausência de conta do Google AdSense. Conta/H5 e consentimento ainda precisam ser preparados; anúncio real, receita e consentimento do Google não foram validados.

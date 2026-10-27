@@ -1,8 +1,14 @@
-import { mkdir, cp, readdir, stat } from 'node:fs/promises';
+import { mkdir, cp, readdir, stat, writeFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import {poses,cast} from '../frontend/cast.mjs';
+import adsConfig from '../frontend/ads-config.mjs';
 const root=path.resolve(import.meta.dirname,'..'),out=path.join(root,'dist');
 await mkdir(path.join(out,'assets'),{recursive:true});
+if(adsConfig.enabled&&!adsConfig.publisherId)throw new Error('Configure an approved AdSense publisher before enabling ads');
+if(adsConfig.publisherId){
+  if(!/^ca-pub-\d{16}$/.test(adsConfig.publisherId))throw new Error('Invalid AdSense publisher ID');
+  await writeFile(path.join(out,'ads.txt'),`google.com, ${adsConfig.publisherId.slice(3)}, DIRECT, f08c47fec0942fa0\n`);
+}else await rm(path.join(out,'ads.txt'),{force:true});
 for(const name of await readdir(path.join(root,'frontend'))) await cp(path.join(root,'frontend',name),path.join(out,name),{recursive:true});
 await cp(path.join(root,'assets','web'),path.join(out,'assets'),{recursive:true});
 const sprite=await stat(path.join(out,'assets','flavio.png'));

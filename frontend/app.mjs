@@ -3,9 +3,12 @@ import { levels, makeCrowd, spawnCandidates, renderWorld, W, H } from './scenes.
 import { poses, levelPoses, loadSprite, loadCast, cast } from './cast.mjs';
 import {loadCrowdArtwork} from './crowd.mjs';
 import {pickSceneHit} from './hit-scene.mjs';
+import adsConfig from './ads-config.mjs';
+import {createGameAds} from './ads.mjs';
 
 const $=s=>document.querySelector(s), app=$('#app'), dialog=$('#dialog');
-let progress={}, sound=false, untimed=false, audio, game=null, home=true, loadTicket=0;
+let progress={}, sound=false, untimed=false, audio, game=null, home=true, loadTicket=0, adShowing=false;
+const gameAds=createGameAds(adsConfig);
 try { progress=safeProgress(JSON.parse(localStorage.getItem('ak-flavio-v1')||'{}')); } catch {}
 const fmt=n=>new Intl.NumberFormat('pt-BR').format(n);
 const clock=n=>`${Math.floor(Math.max(0,n)/60)}`.padStart(2,'0')+':'+`${Math.floor(Math.max(0,n)%60)}`.padStart(2,'0');
@@ -13,7 +16,7 @@ const stars=n=>'★'.repeat(n)+'☆'.repeat(3-n);
 const total=()=>Object.values(progress).reduce((n,v)=>n+v.score,0);
 let toastTimeout;
 function toast(message){$('#toast').textContent=message;$('#toast').classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>$('#toast').classList.remove('show'),2700);}
-function beep(success=false){if(!sound)return;try{audio??=new AudioContext();audio.resume();const o=audio.createOscillator(),gain=audio.createGain();o.connect(gain);gain.connect(audio.destination);o.frequency.setValueAtTime(success?660:180,audio.currentTime);o.frequency.exponentialRampToValueAtTime(success?1100:120,audio.currentTime+.17);gain.gain.setValueAtTime(.065,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.25);o.start();o.stop(audio.currentTime+.26);}catch{}}
+function beep(success=false){if(!sound||adShowing)return;try{audio??=new AudioContext();audio.resume();const o=audio.createOscillator(),gain=audio.createGain();o.connect(gain);gain.connect(audio.destination);o.frequency.setValueAtTime(success?660:180,audio.currentTime);o.frequency.exponentialRampToValueAtTime(success?1100:120,audio.currentTime+.17);gain.gain.setValueAtTime(.065,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.25);o.start();o.stop(audio.currentTime+.26);}catch{}}
 function modal(content){dialog.innerHTML=content;dialog.showModal();}
 function save(){try{localStorage.setItem('ak-flavio-v1',JSON.stringify(progress));}catch{toast('O navegador não permitiu salvar o progresso.');}}
 function allyPanel(){
@@ -40,7 +43,13 @@ function renderHome(){
 
 async function start(index,previous=-1,previousPose=null){
   const ticket=++loadTicket;home=false;if(game)game.active=false;dialog.close();document.body.classList.add('playing');
-  app.innerHTML='<div class="loading"><span class="brand-eye">◉◉</span><p>Espalhando a multidão…</p></div>';
+  app.innerHTML='<div class="loading" role="status"><span class="brand-eye">◉◉</span><p>Preparando sua busca…</p></div>';
+  await gameAds.beforeGame({sound,isCurrent:()=>ticket===loadTicket,
+    beforeAd:()=>{adShowing=true;app.inert=true;$('.site-header').inert=true;dialog.close();audio?.suspend().catch(()=>{});},
+    afterAd:()=>{adShowing=false;app.inert=false;$('.site-header').inert=false;if(sound)audio?.resume().catch(()=>{});},
+  });
+  if(ticket!==loadTicket)return;
+  $('.loading p').textContent='Espalhando a multidão…';
   const posePool=levelPoses[index],poseId=posePool[chooseSpawn(posePool.length,posePool.indexOf(previousPose))];
   let asset,castAssets,crowdArtwork;
   try{[asset,castAssets,crowdArtwork]=await Promise.all([loadSprite(poses[poseId]),loadCast(),loadCrowdArtwork()]);}catch{if(ticket===loadTicket){renderHome();toast('Não foi possível carregar os personagens. Tente novamente.');}return;}
@@ -129,4 +138,4 @@ function frame(now){
   const g=game;if(g&&g.active&&!g.paused){const dt=(now-g.last)/1000;g.elapsed+=dt;if(!g.untimed)g.seconds=Math.max(0,g.seconds-dt);if(!g.untimed&&g.seconds<=0)timeout();else{updateHud();if(g.hintUntil>now||g.hintUntil>g.last||g.miss&&now-g.miss.time<750)draw();}}
   if(g)g.last=now;requestAnimationFrame(frame);
 }
-renderHome();requestAnimationFrame(frame);
+gameAds.prepare();renderHome();requestAnimationFrame(frame);

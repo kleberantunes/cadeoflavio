@@ -2,6 +2,15 @@
 
 Developed by AK Labs
 
+## 0.5.0 — 2026-10-27
+
+### Preparado
+- Integração Google AdSense H5 Games Ads na transição antes da primeira partida, com no máximo uma oportunidade por carregamento de página.
+- Retorno ao jogo pelo callback do Google, áudio e controles suspensos durante a exibição, continuidade em caso de SDK bloqueado, carregamento lento ou falta de inventário.
+- Configuração pública do editor separada; geração de ads.txt quando houver ID válido, página de privacidade e guia de ativação.
+- Seis testes de integração do fluxo de anúncios, sem requisições ou cliques em anúncios reais.
+- Monetização permanece desativada e sem ID de editor, aguardando confirmação da conta, aprovação Google/H5 e preparação de consentimento. Nenhum anúncio ou rendimento real foi ativado.
+
 ## Estatísticas de acesso — 2026-10-27
 
 - Cloudflare Web Analytics ativado para `cadeoflavio.pages.dev` pela integração nativa do Pages.
