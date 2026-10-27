@@ -65,3 +65,5 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Navegador local: Rio carregou com timer, canvas e oito aliados, sem script de publicidade e sem erros de console; página de privacidade aberta pelo rodapé e texto conferido.
 - Build concluído. Sem ID de editor, ads.txt não é gerado com dados fictícios.
 - Sessão Google consultada no Chrome exibiu Ausência de conta do Google AdSense. Conta/H5 e consentimento ainda precisam ser preparados; anúncio real, receita e consentimento do Google não foram validados.
+- Publicação confirmada: deployment 82aabed1-5f0c-44d1-b29e-caa24c11e7cb com estágio success. Site, módulo de ads e página de privacidade retornaram HTTP 200; configuração pública preservou enabled:false e a inclusão única de Cloudflare Analytics.
+- Navegador público: Rio abriu com cronômetro e oito aliados; nenhuma tag googlesyndication foi carregada enquanto a monetização permanece inativa.
