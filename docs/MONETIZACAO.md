@@ -6,6 +6,8 @@ Developed by AK Labs · 27/10/2026
 
 A integração foi preparada para um anúncio intersticial antes da primeira partida, na transição entre a escolha do destino e a busca. O usuário forneceu o ID `ca-pub-3370399904738754`, confirmado na sessão AdSense. A configuração pública, o código de conexão no HTML e o ads.txt usam esse editor. **As solicitações H5 ainda estão desativadas:** falta confirmar o acesso ao programa H5 Games Ads, a aprovação do site e o consentimento aplicável. Código instalado não significa receita ou aprovação pelo Google.
 
+O Google confirmou “Seu site foi verificado” após a publicação. O pedido de revisão foi enviado; a tela final exibiu “Você concluiu todas as etapas” e “Agradecemos por conectar o site”. Isso confirma a conexão e o envio, sem confirmar aprovação ou monetização ativa. A candidatura H5 não foi enviada; o programa exige conta AdSense aprovada e solicita informações adicionais do titular.
+
 Google Ads é usado para comprar anúncios. Google AdSense é usado para receber pela exibição. H5 Games Ads é um produto do AdSense com candidatura e aprovação próprias; a aprovação não é garantida. A conta está agora acessível no Chrome, com o site cadastrado e a etapa de pagamentos já concluída pelo titular. O agente não alterou dados de pagamento nem submeteu cadastro, termos ou campanhas.
 
 ## Vincular a conta

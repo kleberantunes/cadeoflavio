@@ -67,3 +67,12 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Sessão Google consultada no Chrome exibiu Ausência de conta do Google AdSense. Conta/H5 e consentimento ainda precisam ser preparados; anúncio real, receita e consentimento do Google não foram validados.
 - Publicação confirmada: deployment 82aabed1-5f0c-44d1-b29e-caa24c11e7cb com estágio success. Site, módulo de ads e página de privacidade retornaram HTTP 200; configuração pública preservou enabled:false e a inclusão única de Cloudflare Analytics.
 - Navegador público: Rio abriu com cronômetro e oito aliados; nenhuma tag googlesyndication foi carregada enquanto a monetização permanece inativa.
+
+## 0.5.1 — editor AdSense vinculado
+
+- 38 testes passaram, incluindo reutilização do SDK já presente no HTML ao ativar H5. O teste novo falhou antes da correção por carregar uma segunda tag e passou depois dela.
+- Deployment 3bd9bc8f-9e1c-42a1-bc6e-b0e8ba10cd4c confirmado com estágio success. HTML público contém uma meta tag do editor e uma única tag AdSense com async e crossorigin=anonymous.
+- ads.txt público retornou HTTP 200 e a linha google.com, pub-3370399904738754, DIRECT, f08c47fec0942fa0. Identificador do cliente confere com o fornecido pelo usuário e com a conta Google acessível.
+- AdSense confirmou Seu site foi verificado. Pedido de revisão enviado; tela final mostrou Você concluiu todas as etapas e Agradecemos por conectar o site. Pagamentos, termos e cadastro pessoal não foram alterados pelo agente.
+- Navegador público carregou a página inicial e confirmou uma única tag Google com o editor correto. Cloudflare Analytics continua incluído uma única vez.
+- Aprovação final e rendimento não confirmados. Solicitações H5 permanecem desativadas até a liberação do programa e preparação de consentimento. Captura da confirmação salva nos outputs da conversa.
