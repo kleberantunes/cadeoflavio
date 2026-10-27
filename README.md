@@ -4,6 +4,10 @@
 
 Jogo de busca visual e sátira política para navegadores desktop e mobile. O jogador procura uma caricatura listrada em quatro multidões: Rio, Brasília, Buenos Aires e Orlando. Público: jogadores casuais que gostam de jogos de observação.
 
+**Jogar:** https://cadeoflavio.pages.dev · **Código privado:** https://github.com/kleberantunes/cadeoflavio
+
+Para publicar atualizações, consulte `docs/PUBLICACAO.md`. O site usa Cloudflare Pages por upload direto; push no GitHub não dispara publicação automática.
+
 ## Executar
 
 Requer Node.js 22 ou superior. Sem instalação de dependências.

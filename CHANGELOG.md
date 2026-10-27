@@ -2,6 +2,13 @@
 
 Developed by AK Labs
 
+## Publicação — 2026-10-27
+
+- Repositório privado `kleberantunes/cadeoflavio` criado com o histórico do projeto.
+- Projeto Cloudflare Pages `cadeoflavio` criado na conta AKLabs para acesso público em `cadeoflavio.pages.dev`.
+- Configuração Pages, dependência Wrangler com lockfile e comando `npm run deploy:pages` para publicação reproduzível.
+- Integração Git automática indisponível devido ao erro Cloudflare 8000011; publicação configurada por upload direto, sem armazenar credenciais no repositório.
+
 ## 0.2.0 — 2026-10-27
 
 ### Adicionado
