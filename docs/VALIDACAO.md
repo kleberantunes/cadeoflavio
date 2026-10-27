@@ -47,3 +47,12 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Partida concluída em Buenos Aires com um aliado, uma dica e três erros no modo livre: resultado de 1.025 pontos (1.000 +250 −150 −75). Resultado discriminou 1/8 aliados e +250 pontos bônus.
 - Detecção passou a considerar as camadas opacas da frente. Clicar em um figurante comum continuou aplicando a penalidade, sem coletar o aliado atrás dele.
 - Publicação confirmada no Cloudflare: deployment `454f563b-715b-4b03-b167-a6ff8d5feb19`, estágio `success`. app.mjs público retornou HTTP 200 com o painel e a regra de bônus. Rio carregado no site público com 0/8 aliados e instrução de +250 por aliado.
+
+## Estatísticas de acesso — 27/10/2026
+
+- Site RUM criado para cadeoflavio.pages.dev e vinculado à configuração nativa do Pages.
+- Deployment cd8089b1-73e2-4c8b-a857-6ed8563cac9f confirmado com estágio success.
+- HTML público HTTP 200 com uma única inclusão do beacon e identificador esperado. JavaScript do beacon retornou HTTP 200.
+- Navegador no endereço público carregou a tela inicial e confirmou um único script Cloudflare Insights no DOM.
+- Build estático concluído. Não houve alteração nas regras do jogo; os 31 testes da versão 0.4.0 continuam sendo a referência da lógica.
+- Os totais processados no painel não foram verificados nesta ativação. A coleta começa agora, sem histórico retroativo; localização disponível por país.
