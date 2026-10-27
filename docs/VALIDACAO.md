@@ -19,3 +19,13 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Navegador: alvo com bandeira americana em Orlando, miniatura correspondente, zoom a 276%, clique válido e resultado de 1.000 pontos no modo livre.
 - Brasília: pose na cadeira de praia carregada; reinício alterou para pose dentro do carro e atualizou a miniatura.
 - Figurantes procedurais mantidos, com os coadjuvantes visíveis entre eles. Dispositivos físicos e harmonização artística final continuam pendentes.
+
+## Publicação Cloudflare Pages — 27/10/2026
+
+- `https://cadeoflavio.pages.dev/`: HTTP 200, título correto e acesso sem login.
+- Módulos app.mjs e cast.mjs e sprites standing.png/car.png: HTTP 200.
+- Deployment `bfa542ea-4b12-49b2-96c0-1c3cb6d13be2`: estágio Cloudflare `success`.
+- Navegador no endereço público: primeira fase carregada, multidão, miniatura, HUD e controles visíveis.
+- GitHub `kleberantunes/cadeoflavio`: privado, branch principal `main`, código enviado.
+- `npm test`: 19 testes passaram; `npm run build`: concluído antes do upload.
+- Integração Git nativa não ativada por erro de instalação Cloudflare 8000011. Upload direto concluído com Wrangler, usando a sessão existente do cf somente em memória.
