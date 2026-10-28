@@ -1,0 +1,6 @@
+{
+  "rio":{"striped":[6,8,12,15]},
+  "brasilia":{"striped":[4,6,9,12]},
+  "buenos-aires":{"striped":[4,10,12,14]},
+  "orlando":{"striped":[3,5,8,10],"heightScale":{"8":0.82}}
+}

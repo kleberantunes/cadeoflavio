@@ -76,3 +76,13 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - AdSense confirmou Seu site foi verificado. Pedido de revisão enviado; tela final mostrou Você concluiu todas as etapas e Agradecemos por conectar o site. Pagamentos, termos e cadastro pessoal não foram alterados pelo agente.
 - Navegador público carregou a página inicial e confirmou uma única tag Google com o editor correto. Cloudflare Analytics continua incluído uma única vez.
 - Aprovação final e rendimento não confirmados. Solicitações H5 permanecem desativadas até a liberação do programa e preparação de consentimento. Captura da confirmação salva nos outputs da conversa.
+
+## 0.6.0 — elenco regional e busca variada — 28/10/2026
+
+- 64 sprites regionais criados pela ferramenta integrada image_gen: 16 por destino. Fontes transparentes, prompts completos e rótulos de listras preservados; empacotamento removeu um pequeno fragmento entre duas silhuetas de Orlando.
+- Quatro atlas de aproximadamente 370–432 KB, carregados por destino. 44 sprites genéricos e identidades fornecidas preservados.
+- 49 testes passaram antes da conferência de navegador; testes de arte regional foram repetidos após a limpeza de alfa. Cobertura inclui 96 distribuições, 12 setores por destino, histórico de seis setores, distância de 420 unidades quando disponível, oito aliados distintos e alvo único.
+- Distribuições de referência: Rio 160 candidatos; Brasília 149; Buenos Aires 148; Orlando 141. Os valores variam por semente. O limite anterior de 24 foi removido.
+- Navegador: quatro fases carregadas com seus públicos regionais e oito aliados, em zoom 246%. Reinício do Rio alterou a distribuição e a pose; sem erros de console na sequência das quatro fases.
+- Tela 390 × 844 conferida em Orlando. Identificado e corrigido o corte do oitavo retrato de aliado; oito retratos visíveis na nova captura. Prévia de cada destino salva nos outputs da conversa.
+- Build estático concluído, com verificações de presença dos quatro atlas regionais. Pontuação, recordes, Analytics e editor AdSense mantidos.

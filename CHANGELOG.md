@@ -2,6 +2,19 @@
 
 Developed by AK Labs
 
+## 0.6.0 — 2026-10-28
+
+### Adicionado
+- 64 novos figurantes, 16 por destino, com moradores, trabalhadores e visitantes próprios do Rio, Brasília, Buenos Aires e Orlando. Total de 108 modelos de figurantes, além do elenco fornecido.
+- Quatro atlas regionais transparentes carregados conforme o destino; fontes e prompts da ferramenta integrada de imagens versionados.
+- Nova distribuição da multidão a cada partida e reinício, com sorteio espacial entre 12 setores e histórico dos seis setores recentes por destino.
+
+### Melhorado
+- Busca considera todos os candidatos seguros, removendo a seleção de um em seis e o limite de 24 posições. Procura manter distância da posição anterior.
+- Novos modelos e listras respeitam o contexto regional, a profundidade e as máscaras de clique. Alvo único e oito aliados mantidos em todas as distribuições testadas.
+- Oito retratos de aliados cabem no painel de celular sem corte do último.
+- 49 testes passaram, incluindo 96 distribuições e os quatro elencos regionais.
+
 ## 0.5.1 — 2026-10-27
 
 - ID AdSense fornecido pelo usuário vinculado à configuração pública e à geração de ads.txt.

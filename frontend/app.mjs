@@ -5,10 +5,12 @@ import {loadCrowdArtwork} from './crowd.mjs';
 import {pickSceneHit} from './hit-scene.mjs';
 import adsConfig from './ads-config.mjs';
 import {createGameAds} from './ads.mjs';
+import {chooseSearchSpawn} from './search-layout.mjs';
 
 const $=s=>document.querySelector(s), app=$('#app'), dialog=$('#dialog');
 let progress={}, sound=false, untimed=false, audio, game=null, home=true, loadTicket=0, adShowing=false;
 const gameAds=createGameAds(adsConfig);
+const searchHistory=new Map(),roundSeeds=new Map();
 try { progress=safeProgress(JSON.parse(localStorage.getItem('ak-flavio-v1')||'{}')); } catch {}
 const fmt=n=>new Intl.NumberFormat('pt-BR').format(n);
 const clock=n=>`${Math.floor(Math.max(0,n)/60)}`.padStart(2,'0')+':'+`${Math.floor(Math.max(0,n)%60)}`.padStart(2,'0');
@@ -41,7 +43,7 @@ function renderHome(){
   $('#untimed').onchange=e=>{untimed=e.target.checked;};
 }
 
-async function start(index,previous=-1,previousPose=null){
+async function start(index,previousPose=null){
   const ticket=++loadTicket;home=false;if(game)game.active=false;dialog.close();document.body.classList.add('playing');
   app.innerHTML='<div class="loading" role="status"><span class="brand-eye">◉◉</span><p>Preparando sua busca…</p></div>';
   await gameAds.beforeGame({sound,isCurrent:()=>ticket===loadTicket,
@@ -52,13 +54,16 @@ async function start(index,previous=-1,previousPose=null){
   $('.loading p').textContent='Espalhando a multidão…';
   const posePool=levelPoses[index],poseId=posePool[chooseSpawn(posePool.length,posePool.indexOf(previousPose))];
   let asset,castAssets,crowdArtwork;
-  try{[asset,castAssets,crowdArtwork]=await Promise.all([loadSprite(poses[poseId]),loadCast(),loadCrowdArtwork()]);}catch{if(ticket===loadTicket){renderHome();toast('Não foi possível carregar os personagens. Tente novamente.');}return;}
+  try{[asset,castAssets,crowdArtwork]=await Promise.all([loadSprite(poses[poseId]),loadCast(),loadCrowdArtwork(index)]);}catch{if(ticket===loadTicket){renderHome();toast('Não foi possível carregar os personagens. Tente novamente.');}return;}
   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
   if(ticket!==loadTicket)return;
-  const l=levels[index],people=makeCrowd(l),candidates=spawnCandidates(people),spawn=chooseSpawn(candidates.length,previous);
+  let roundSeed=crypto.getRandomValues(new Uint32Array(1))[0];
+  if(roundSeed===roundSeeds.get(index))roundSeed=(roundSeed+1)>>>0;
+  const l=levels[index],people=makeCrowd(l,roundSeed),candidates=spawnCandidates(people);
   if(!candidates.length){renderHome();toast('Não foi possível preparar esta fase.');return;}
-  const target=candidates[spawn],world=renderWorld(l,people,target,asset,castAssets,crowdArtwork);
-  game={index,l,people,target,spawn,world,asset,alliesFound:[],seconds:l.duration,elapsed:0,errors:0,hints:0,active:true,paused:false,found:false,camera:{x:0,y:0,scale:1},hintUntil:0,miss:null,last:performance.now(),untimed};
+  const recent=searchHistory.get(index)||[],target=chooseSearchSpawn(candidates,recent),world=renderWorld(l,people,target,asset,castAssets,crowdArtwork);
+  searchHistory.set(index,[...recent,{x:target.x,y:target.y}].slice(-6));roundSeeds.set(index,roundSeed);
+  game={index,l,people,target,roundSeed,world,asset,alliesFound:[],seconds:l.duration,elapsed:0,errors:0,hints:0,active:true,paused:false,found:false,camera:{x:0,y:0,scale:1},hintUntil:0,miss:null,last:performance.now(),untimed};
   app.innerHTML=`<section class="game-shell"><div class="game-heading"><button class="back quiet" id="back">← Destinos</button><div><span class="eyebrow">DESTINO 0${index+1} / 04 · ${l.place.toUpperCase()}</span><h1>${l.name}<span class="red">.</span></h1></div><div class="game-progress">${levels.map((_,i)=>`<span class="${i===index?'current':progress[i]?'done':''}">${progress[i]?'✓':i+1}</span>`).join('<i></i>')}</div></div>
   <div class="hud"><div class="target-preview"><img src="${asset.meta.src}" alt="${asset.meta.label}"><div><small>SEU ALVO</small><b>${asset.meta.label}</b></div></div><div class="stat"><small>${untimed?'MODO LIVRE':'TEMPO RESTANTE'}</small><b id="timer">${untimed?'Sem pressa':clock(l.duration)}</b></div><div class="stat"><small>PONTOS NESTA BUSCA</small><b id="points">0</b></div><div class="hud-actions"><button id="hint" class="hint-button">◉ Dica <small>−150 pts</small></button><button id="pause" class="icon-button" aria-label="Pausar jogo">Ⅱ</button><button id="restart" class="icon-button" aria-label="Reiniciar fase">↻</button></div></div>
   ${allyPanel()}
@@ -69,7 +74,7 @@ async function start(index,previous=-1,previousPose=null){
   fit();game.last=performance.now();$('#scene').focus({preventScroll:true});
 }
 
-function restart(){if(!game)return;const {index,spawn,asset}=game;start(index,spawn,asset.meta.id);}
+function restart(){if(!game)return;const {index,asset}=game;start(index,asset.meta.id);}
 let viewport={w:0,h:0},resizeObserver;
 function fit(){if(!game)return;const s=Math.min(viewport.w/W,viewport.h/H);game.minScale=s;game.camera=clampCamera({scale:s,x:0,y:0},viewport.w,viewport.h,W,H);draw();}
 function zoom(factor,cx=viewport.w/2,cy=viewport.h/2){if(!game||game.paused||game.found)return;const c=game.camera,p=screenToWorld(cx,cy,c),scale=Math.max(game.minScale,Math.min(game.minScale*6,c.scale*factor));game.camera=clampCamera({scale,x:cx-p.x*scale,y:cy-p.y*scale},viewport.w,viewport.h,W,H);draw();}

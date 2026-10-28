@@ -1,6 +1,6 @@
 // Original deterministic illustrated scenes. Developed by AK Labs.
 import { castForCrowd, spriteBox } from './cast.mjs';
-import {planCrowdSprites,drawCrowdPerson,crowdPersonBox} from './crowd.mjs';
+import {planCrowdSprites,drawCrowdPerson,crowdPersonBox,artworkForFrame} from './crowd.mjs';
 export const W = 2400, H = 1600;
 export const levels = [
   { name: 'Cadê no Rio?', place: 'Rio de Janeiro', country: 'BRASIL', slug: 'rio', color: '#e9ab64', count: 520, duration: 120, tag: 'Primeira parada', description: 'Entre lajes, música e muita gente, alguém resolveu se misturar.', stamp: 'RIO', seed: 23 },
@@ -9,8 +9,8 @@ export const levels = [
   { name: 'Férias em família', place: 'Orlando', country: 'ESTADOS UNIDOS', slug: 'orlando', color: '#8c90b4', count: 840, duration: 165, tag: 'Desafio final', description: 'A fila é enorme. O parque também. E ele está por aqui.', stamp: 'MCO', seed: 218 },
 ];
 function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-export function makeCrowd(level) {
-  const r = rng(level.seed), people = [];
+export function makeCrowd(level,roundSeed=level.seed) {
+  const r = rng(roundSeed), people = [];
   for (let i = 0; i < level.count; i++) {
     const y = 530 + r() * 1000, x = 45 + r() * 2310;
     people.push({ x, y, height: 77 + y / H * 53, skin: Math.floor(r() * 6), shirt: Math.floor(r() * 12), pose: Math.floor(r() * 6), hat: r() < .38, striped: r() < .19, seed: r(), id: i });
@@ -19,7 +19,7 @@ export function makeCrowd(level) {
 }
 export function spawnCandidates(people) {
   // Replace a crowd member at a valid depth, with enough head room and no face occlusion.
-  return people.filter(p => p.y > 700 && p.y < 1420 && p.x > 180 && p.x < 2220 && !people.some(q => q !== p && q.y > p.y && q.y < p.y + p.height * .55 && Math.abs(q.x - p.x) < p.height * .32)).filter((_, i) => i % 6 === 0).slice(0, 24);
+  return people.filter(p => p.y > 620 && p.y < 1480 && p.x > 120 && p.x < 2280 && !people.some(q => q !== p && q.y > p.y && q.y < p.y + p.height * .55 && Math.abs(q.x - p.x) < p.height * .32));
 }
 function rect(c,x,y,w,h,color,stroke=true) { c.fillStyle=color; c.fillRect(x,y,w,h); if(stroke){c.strokeStyle='#51443d';c.lineWidth=2;c.strokeRect(x,y,w,h);} }
 function path(c, points, fill, stroke='#51443d', width=2) { c.beginPath(); points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y)); c.closePath(); c.fillStyle=fill;c.fill();c.lineWidth=width;c.strokeStyle=stroke;c.stroke(); }
@@ -96,7 +96,7 @@ export function renderWorld(level, people, target, targetAsset, castAssets, crow
     } else {
       const item=crowdPlan.get(p.id);
       drawCrowdPerson(c,p,item,crowdArtwork);
-      layers.push({type:'npc',box:crowdPersonBox(p,item),frame:item.frame,mirror:item.mirror,artwork:crowdArtwork});
+      layers.push({type:'npc',box:crowdPersonBox(p,item),frame:item.frame,mirror:item.mirror,artwork:artworkForFrame(item.frame,crowdArtwork)});
     }
   }
   return {canvas, box, castPlan,allies,layers};

@@ -1,8 +1,10 @@
 # Onde Está o Flávio?
 
-**Developed by AK Labs** · MVP web 0.5.1 · 27/10/2026
+**Developed by AK Labs** · MVP web 0.6.0 · 28/10/2026
 
 Jogo de busca visual e sátira política para navegadores desktop e mobile. O jogador procura uma caricatura listrada em quatro multidões: Rio, Brasília, Buenos Aires e Orlando. Público: jogadores casuais que gostam de jogos de observação.
+
+A versão 0.6.0 adiciona 64 figurantes regionais aos 44 existentes e renova a distribuição a cada partida. A busca usa 12 setores com histórico recente para variar os locais, preservando um alvo e oito aliados. Arte, prompts e detalhes do sorteio: `docs/ELENCO_REGIONAL.md`.
 
 **Jogar:** https://cadeoflavio.pages.dev · **Código público:** https://github.com/kleberantunes/cadeoflavio
 
