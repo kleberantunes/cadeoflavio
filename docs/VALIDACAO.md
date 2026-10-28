@@ -86,3 +86,5 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Navegador: quatro fases carregadas com seus públicos regionais e oito aliados, em zoom 246%. Reinício do Rio alterou a distribuição e a pose; sem erros de console na sequência das quatro fases.
 - Tela 390 × 844 conferida em Orlando. Identificado e corrigido o corte do oitavo retrato de aliado; oito retratos visíveis na nova captura. Prévia de cada destino salva nos outputs da conversa.
 - Build estático concluído, com verificações de presença dos quatro atlas regionais. Pontuação, recordes, Analytics e editor AdSense mantidos.
+- Publicação confirmada: deployment a2533669-5794-48c1-ab58-f371afc879c6 com estágio success. Quatro atlas públicos retornaram HTTP 200 image/webp e os respectivos metadados confirmaram 16 personagens cada.
+- Rio aberto no endereço público com o elenco regional, 520 pessoas, oito aliados e zoom de 246%; captura salva em rio-elenco-regional-publicado-v0.6.0.png. Inclusões únicas de Analytics e AdSense e ads.txt do editor preservados. Pacote de arte/prompts conferido com 15 arquivos.
