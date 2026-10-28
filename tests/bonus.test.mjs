@@ -1,15 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ALLY_POINTS,claimAlly,scoreLevel,safeProgress} from '../frontend/core.mjs';
+import {ALLY_POINTS,ALLY_TIME_SECONDS,claimAlly,scoreLevel,safeProgress} from '../frontend/core.mjs';
 import {pickSceneHit} from '../frontend/hit-scene.mjs';
 
 test('each distinct ally grants 250 points, never twice',()=>{
   const ids=['cast-01','cast-02'];
   const first=claimAlly([],ids[0],ids);
-  assert.deepEqual(first,{found:['cast-01'],added:ALLY_POINTS});
-  assert.deepEqual(claimAlly(first.found,ids[0],ids),{found:first.found,added:0});
-  assert.deepEqual(claimAlly(first.found,ids[1],ids),{found:ids,added:ALLY_POINTS});
-  assert.deepEqual(claimAlly([], 'standing',ids),{found:[],added:0});
+  assert.deepEqual(first,{found:['cast-01'],added:ALLY_POINTS,secondsAdded:15});
+  assert.deepEqual(claimAlly(first.found,ids[0],ids),{found:first.found,added:0,secondsAdded:0});
+  assert.deepEqual(claimAlly(first.found,ids[1],ids),{found:ids,added:ALLY_POINTS,secondsAdded:15});
+  assert.deepEqual(claimAlly([], 'standing',ids),{found:[],added:0,secondsAdded:0});
+});
+
+test('eight distinct extras grant 120 seconds, with no cap at the starting time',()=>{
+  assert.equal(ALLY_TIME_SECONDS,15);
+  const ids=Array.from({length:8},(_,i)=>`cast-${i}`);
+  let found=[],seconds=119.5;
+  for(const id of ids){const reward=claimAlly(found,id,ids);found=reward.found;seconds+=reward.secondsAdded;}
+  assert.equal(seconds,239.5);
+  assert.equal(claimAlly(found,ids[0],ids).secondsAdded,0);
+});
+
+test('free mode keeps points without awarding clock time',()=>{
+  const reward=claimAlly([],'cast-01',['cast-01'],true);
+  assert.equal(reward.added,ALLY_POINTS);assert.equal(reward.secondsAdded,0);
 });
 test('ally bonuses are included with time, hints and error deductions',()=>{
   assert.equal(scoreLevel(0,0,0,8),3000);

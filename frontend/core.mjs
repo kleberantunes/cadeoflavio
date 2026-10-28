@@ -1,9 +1,10 @@
 // Game rules and coordinate transforms. Developed by AK Labs.
 export const ALLY_POINTS=250;
+export const ALLY_TIME_SECONDS=15;
 export const scoreLevel = (seconds, errors, hints, allies=0) => Math.max(0, 1000 + Math.floor(seconds) * 10 - errors * 25 - hints * 150 + Math.min(8,Math.max(0,Math.floor(allies)))*ALLY_POINTS);
-export function claimAlly(found,id,availableIds){
-  if(!availableIds.includes(id)||found.includes(id))return {found,added:0};
-  return {found:[...found,id],added:ALLY_POINTS};
+export function claimAlly(found,id,availableIds,untimed=false){
+  if(!availableIds.includes(id)||found.includes(id))return {found,added:0,secondsAdded:0};
+  return {found:[...found,id],added:ALLY_POINTS,secondsAdded:untimed?0:ALLY_TIME_SECONDS};
 }
 export const starsFor = (seconds, duration, hints) => hints > 1 ? 1 : hints === 0 && seconds > duration / 2 ? 3 : 2;
 export const penalize = seconds => Math.max(0, seconds - 3);

@@ -9,3 +9,7 @@ Encontrar Flávio continua encerrando a fase e confirma os pontos no resultado. 
 O canvas registra as camadas desenhadas. O hit test percorre da frente para trás e consulta o alfa dos sprites, incluindo os figurantes do atlas. Isso impede coletar através de outro corpo opaco. Carro, bandeira e floreiras respeitam as regiões válidas do protagonista. O alfa do atlas é compactado em um byte por pixel e reutilizado nas partidas.
 
 O posicionamento dos aliados usa candidatos com espaço geométrico para o rosto. Testes percorrem todas as posições válidas do alvo nas quatro fases para garantir oito aliados distintos. Não há revelação antecipada das posições nem alteração na arte dos personagens fornecidos.
+
+## Atualização 0.6.1 — 28/10/2026
+
+Por solicitação do usuário, cada coleta válida concede também 15 segundos no modo cronometrado. A mesma validação de identidade impede duplicar pontos e tempo. A regra pura retorna `secondsAdded`; a partida soma esse valor antes de atualizar o HUD. O relógio pode ultrapassar a duração inicial, até 120 segundos extras pelas oito identidades. O modo livre retorna zero segundos e preserva os pontos. O tempo de busca decorrido não é alterado; a pontuação final continua usando o tempo restante, incluindo o conquistado com os aliados.

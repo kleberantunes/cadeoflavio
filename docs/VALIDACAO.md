@@ -88,3 +88,10 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Build estático concluído, com verificações de presença dos quatro atlas regionais. Pontuação, recordes, Analytics e editor AdSense mantidos.
 - Publicação confirmada: deployment a2533669-5794-48c1-ab58-f371afc879c6 com estágio success. Quatro atlas públicos retornaram HTTP 200 image/webp e os respectivos metadados confirmaram 16 personagens cada.
 - Rio aberto no endereço público com o elenco regional, 520 pessoas, oito aliados e zoom de 246%; captura salva em rio-elenco-regional-publicado-v0.6.0.png. Inclusões únicas de Analytics e AdSense e ads.txt do editor preservados. Pacote de arte/prompts conferido com 15 arquivos.
+
+## 0.6.1 — aliados concedem tempo — 28/10/2026
+
+- 51 testes passaram, cobrindo 15 segundos por aliado distinto, oito coletas somando 120 segundos sem limitar à duração inicial, repetições/identidades inválidas sem recompensa e modo livre sem acréscimo de tempo.
+- Navegador local em partida cronometrada do Rio: coleta do aliado 1 alterou 01:38 para 01:53, somou 250 pontos e marcou 1/8. Clique repetido exibiu Você já encontrou esse aliado; pontos permaneceram em 250 e o relógio continuou decrescendo normalmente.
+- Painel e rodapé mostraram +15 s. Aviso de coleta confirmou +250 pontos e +15 s. Captura salva nos outputs da conversa.
+- Build estático concluído e sintaxe do módulo app.mjs conferida. Bônus de tempo usa o mesmo bloqueio de coleta duplicada dos pontos.

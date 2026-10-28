@@ -2,6 +2,13 @@
 
 Developed by AK Labs
 
+## 0.6.1 — 2026-10-28
+
+- Cada aliado extra encontrado acrescenta 15 segundos ao cronômetro, além dos 250 pontos existentes, uma vez por personagem por partida.
+- Oito aliados podem conceder até 120 segundos; o relógio pode ultrapassar a duração inicial. No modo livre, mantém-se somente o bônus em pontos.
+- Painel, aviso de coleta, instruções e resultado informam o tempo ganho. Cliques repetidos e personagens sem bônus não concedem tempo.
+- 51 testes passaram. Partida cronometrada conferida no navegador: 01:38 → 01:53 ao coletar o primeiro aliado; clique repetido manteve 250 pontos e não concedeu tempo.
+
 ## 0.6.0 — 2026-10-28
 
 ### Adicionado

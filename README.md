@@ -1,6 +1,6 @@
 # Onde Está o Flávio?
 
-**Developed by AK Labs** · MVP web 0.6.0 · 28/10/2026
+**Developed by AK Labs** · MVP web 0.6.1 · 28/10/2026
 
 Jogo de busca visual e sátira política para navegadores desktop e mobile. O jogador procura uma caricatura listrada em quatro multidões: Rio, Brasília, Buenos Aires e Orlando. Público: jogadores casuais que gostam de jogos de observação.
 
@@ -29,7 +29,7 @@ Abra http://127.0.0.1:4173. O diretório `dist/` é a versão estática para hos
 - Escolha um destino e encontre o personagem mostrado no topo.
 - Arraste a cena; amplie com roda, pinça ou botões. No teclado, setas movem, +/− ampliam, Enter procura na mira central e espaço pausa.
 - Acerto: 1.000 pontos +10 por segundo restante. Erro: −25 pontos no resultado e −3 segundos. Até três dicas por fase, custando 150 pontos cada.
-- Oito aliados opcionais por fase: +250 pontos cada, no máximo uma vez por partida. Procure-os antes do Flávio, que encerra a fase e confirma o bônus. Retratos no painel mostram o progresso; aliados encontrados recebem marcação verde. Cliques respeitam a transparência e a ordem de sobreposição dos personagens.
+- Oito aliados opcionais por fase: +250 pontos e +15 segundos cada, no máximo uma vez por personagem na partida. Até 120 segundos extras, podendo ultrapassar o tempo inicial da fase. No modo sem cronômetro, o bônus é apenas em pontos. Procure-os antes do Flávio, que encerra a fase e confirma o bônus. Retratos no painel mostram o progresso; aliados encontrados recebem marcação verde. Cliques respeitam a transparência e a ordem de sobreposição dos personagens.
 - Três estrelas: sem dicas e mais de metade do tempo. Duas: conclusão normal. Uma: duas ou mais dicas. Modo livre não tem bônus temporal e rende até duas estrelas.
 - Progresso e recordes ficam apenas no navegador. Sem cadastro ou coleta de dados do jogo. A fonte Google Fonts é opcional e possui fallback local.
 
