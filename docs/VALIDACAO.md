@@ -95,3 +95,5 @@ Não foi realizada validação em dispositivos físicos, Safari/iOS, Firefox ou 
 - Navegador local em partida cronometrada do Rio: coleta do aliado 1 alterou 01:38 para 01:53, somou 250 pontos e marcou 1/8. Clique repetido exibiu Você já encontrou esse aliado; pontos permaneceram em 250 e o relógio continuou decrescendo normalmente.
 - Painel e rodapé mostraram +15 s. Aviso de coleta confirmou +250 pontos e +15 s. Captura salva nos outputs da conversa.
 - Build estático concluído e sintaxe do módulo app.mjs conferida. Bônus de tempo usa o mesmo bloqueio de coleta duplicada dos pontos.
+- Publicação confirmada: deployment 83140824-6014-4e01-a6e9-27cf89851249 com estágio success. core.mjs público retornou HTTP 200 com a constante de 15 segundos; app.mjs público aplica secondsAdded ao relógio.
+- Navegador no site público abriu a fase cronometrada e exibiu +250 pts e +15 s por aliado no painel e no rodapé. Captura pública salva nos outputs.
